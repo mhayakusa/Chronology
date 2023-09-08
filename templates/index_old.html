@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ガントチャートの実験</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+ 
+<body>
+    <div> 開始年 <input  type="input" id="inputFrom"  value="1600" required; style="width:4em">
+        表示国 <input  type="input" id="selCountry"  value=""  style="width:12em" onchange="SelectCountry()">
+     
+      <button class="buttonA" type="submit" style="background: rgb(52, 233, 16);" id="kikan" onclick="ChangePeriod()">表示更新</button>
+      スケール<select name="inputScale" id="inputScale" onchange="ChangePeriod()">
+        <option value=1 selected>1</option>
+        <option value=2>1/2</option>
+        <option value=5>1/5</option>
+        <option value=10 >1/10</option>
+    </select>
+     <button class="buttonA" type="submit" style="background: rgb(140, 192, 240);" id="kikan" onclick="scrollUp()">▲</button>
+     <button class="buttonA" type="submit" style="background:  rgb(140, 192, 240);" id="kikan" onclick="scrollDown()">▼</button>
+     <button class="buttonA" type="submit" style="background:  rgb(140, 192, 240);" id="subDisp" onclick="subChronoDisp()">詳細表示</button>
+   
+     <details id=pattern1> 
+        <!--<summary id=checkCountory >国選択</summary>-->
+      </details>
+     </div>
+     
+    <div id = "main"></div>
+    <div style="clear: both;position: absolute; background: rgba(227, 245, 125, 0.747)">
+        <canvas style="position: absolute;background: rgb(243, 245, 244)"class="bcanvas" id="myCanvas"  width="1600" height="900"></canvas>
+    </div>
+    <div id="DivsubCanvas" style="position: absolute; left:100; top:150; ">
+        <canvas style="background: rgb(215, 243, 206)" class="bcanvas" id="subCanvas"  width="500" height="200"></canvas></div>
+    </div>
+ 
+    <script src="{{ url_for('static', filename='nenpyo-tate.js') }}"></script>
+    <script>
+        var main_element = document.getElementById('main');
+        var myCanvas = document.getElementById('myCanvas');
+        var ctx = myCanvas.getContext("2d");
+        var subCanvas = document.getElementById('subCanvas');
+        var subctx = myCanvas.getContext("2d");
+        var ganttChart = new GanttChart(myCanvas);
+        var subChrono = new SubChrono(subCanvas);
+        var DispCountryArray= new Array();
+//        DispCountryArray["ギリシャ"] = "希"
+//        DispCountryArray["ルーマニア"] = "尼"
+        DispCountryArray["ローマ"] = "ローマ"
+        DispCountryArray["ギリシア"] = "ギリシア"
+        DispCountryArray["神聖ローマ"] = "神聖ローマ"
+        DispCountryArray["オスマン帝国"] = "オスマン帝国"
+        DispCountryArray["ゲルマニア"] = "ゲルマニア"
+        DispCountryArray["フランク王国"] = "フランク王国"
+        DispCountryArray["ビザンツ帝国"] = "ビザンツ帝国"
+        DispCountryArray["フランス"] = "仏"
+        DispCountryArray["イギリス"] = "英"
+        DispCountryArray["イタリア"] = "伊"
+        DispCountryArray["オーストリア"] = "墺"
+        DispCountryArray["オランダ"] = "蘭"
+        DispCountryArray["スペイン"] = "西"
+        DispCountryArray["ドイツ"] = "独"
+        DispCountryArray["トルコ"] = "土"
+        DispCountryArray["ベルギー"] = "白"
+        DispCountryArray["ポーランド"] = "波"
+        DispCountryArray["ポルトガル"] = "葡"
+        DispCountryArray["ロシア"] = "露"
+        DispCountryArray["北欧"] = "北欧"
+        DispCountryArray["アメリカ"] = "米"
+        DispCountryArray["スイス"] = "瑞"
+        DispCountryArray["ハンガリー"] = "洪"
+        DispCountryArray["ブルガリア"] = "勃"
+        DispCountryArray["中東"] = "中東"
+        DispCountryArray["アフリカ"] = "アフリカ"
+        DispCountryArray["南米"] = "南米"
+//        DispCountryArray["モンゴル"] = "モンゴル"
+//        DispCountryArray["西アジア"] = "西アジア"
+//        DispCountryArray["中央アジア"] = "中央アジア"
+//        DispCountryArray["中国"] = "中国"
+//        DispCountryArray["日本"] = "日本"
+//        DispCountryArray["インド"] = "印"        
+//        DispCountryArray["アフガン"] = "アフガン"
+//        DispCountryArray["韓国"] = "韓"
+//        DispCountryArray["朝鮮"] = "朝"
+//        DispCountryArray["ベトナム"] = "越"
+        
+
+        var subDispSw = false
+        
+        subChrono.SetDisplay('none')
+
+        var FromYear = document.getElementById('inputFrom').value
+        var scaleVal = document.getElementById("inputScale").value;
+        var checkCountry = document.getElementById("pattern1")
+        var checkbox = " <summary id=checkCountory >国選択</summary>"
+        var Carrayleng = Object.keys(DispCountryArray).length
+        
+        var cc = 0
+        for (let key in DispCountryArray) {    
+           // var checkbox = document.createElement('input')
+           // checkbox.type = 'checkbox';
+          //  checkbox.name = key;
+          //  checkbox.value = DispCountryArray[key];
+          //  checkbox.innerText = key
+//            <input type="checkbox" name="Anime1">フランス
+            checkbox = checkbox + "<input type='checkbox' name='checkboxCountry' value=" + "'"+DispCountryArray[key]+"'"+ "onchange='CheckCountry()'>" + key 
+            if (cc == 4){
+                checkbox += "<BR>"
+                cc  = 0
+            } else{
+                cc += 1
+            }
+            checkCountry.innerHTML = checkbox
+//            var label = document.createElement('label');
+//            label.textContent = key;
+//            checkCountry.appendChild(label)
+        }
+
+        ganttChart.SetGanttChartFirstDay(FromYear);
+        ganttChart.SetScale(scaleVal);
+        ganttChart.DrawChart();
+ 
+
+        //let csvData = loadCSV("./test.csv");
+        let targetFile = "/static/japan-hist.csv"
+        var request = new XMLHttpRequest();
+        request.open("get", targetFile, false);
+        request.send(null);
+ 
+        // 読み込んだCSVデータ
+        var csvData = request.responseText;
+            
+        // CSVの全行を取得
+        var lines = csvData.split("\n");
+        var tasks = [];
+        for (var i = 1; i < lines.length; i++) {
+            // 1行ごとの処理
+
+            var taskSet = lines[i].split(",");
+
+//            var wordData = {
+//                name: wordSet[0],
+//                age: wordSet[1],
+//            };
+//              (taskName, areaName, syubetu, startYear, startMonth,endYear,endMonth)
+            tasks.push(new Task(taskSet[3],taskSet[6],taskSet[2],taskSet[0],taskSet[1],taskSet[4],taskSet[5],taskSet[7],taskSet[8],taskSet[9]));
+        }
+
+        ganttChart.SetSchedules(tasks);
+
+        function ChangePeriod(){
+            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
+
+            let FromYear = document.getElementById('inputFrom').value
+            var scaleVal = document.getElementById("inputScale").value;
+
+            ganttChart.SetGanttChartFirstDay(FromYear);
+            ganttChart.SetScale(scaleVal);
+            ganttChart.DrawChart();
+            ganttChart.SetSchedules(tasks);
+
+        }
+        function scrollUp(){
+            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
+            
+            var newYear = ganttChart.scrollUp();
+            document.getElementById('inputFrom').value = newYear
+        }
+        function scrollDown(){
+            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
+            var newYear = ganttChart.scrollDown();
+            document.getElementById('inputFrom').value = newYear
+
+        }
+        function SelectCountry(){
+            ganttChart.SetDispCountry(document.getElementById('selCountry').value) 
+        }
+        function CheckCountry(){
+            var checks = document.getElementsByName('checkboxCountry');
+            var str = '';
+
+            for ( i = 0; i <Carrayleng; i++) {
+                if ( checks[i].checked === true ) {
+                    if (str == ''){
+                        str = checks[i].value ;
+                    }else{
+                        str = str + ":" + checks[i].value    
+                    }
+                        
+                }
+            }
+            document.getElementById('selCountry').value = str
+            SelectCountry()
+        }
+        function subChronoDisp(){
+            if (subDispSw) {
+                subDispSw = false
+                subChrono.SetDisplay('none')
+            } else {
+                subChrono.SetTexts("text　これはテスト ", 20, 40,150)
+                subChrono.SetPosition(180,80)
+                subChrono.SetTexts("text　これはテスト ", 20, 40,150)
+                subDispSw = true
+                subChrono.SetDisplay('block')
+            }
+        }
+    </script>
+ 
+</body>
+</html>

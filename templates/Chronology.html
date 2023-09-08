@@ -1,0 +1,134 @@
+<html lang="ja">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>100人の村にしてみたら</title>
+<!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+<style>
+  @media screen and (max-width: 768px) {
+    .wrapper {
+        display: grid;
+        grid-gap: 10px;
+      }
+    }
+
+  @media screen and (max-width: 480px) {
+    .dcanvas {
+        background: #eeeeee; display: inline; margin: auto ;
+        padding: auto; max-width: 100% ;height: auto;
+        width:300px;
+    } 
+/*          .table1{
+      margin: auto; 
+      grid-column-start: 1;
+      grid-row-start: 2;
+      
+    }
+    .table2{
+      margin: auto; 
+      grid-column-start: 1;
+      grid-row-start: 4;
+      
+    }　*/
+  }
+
+main {
+  background-color: #f1bed2; /*青色*/
+  text-align: center;
+}          
+.dcanvas {
+   background: #eeeeee; display: inline; margin: auto ;
+   padding: auto; max-width: 100% ;height: auto;
+  } 
+.bcanvas {
+   background: #fdfccbfd; 
+   float: left;
+   margin:0 auto ;
+   padding: auto;
+/*   width: 380; */
+/*   max-width: 100% ;*/
+   height: auto;
+} 
+.page1 {
+    display: flow-root;
+    margin:0 auto; 
+    align-items: center;
+    place-items: center;
+}
+button { width: 80px;height: 40px;background: #3ee7; color: black; 
+          padding:5px 0 5px;
+          border-radius: 5px;
+          display: inline; font-size:16px; font-weight: bold; 
+          align-items: center ;
+       }
+.body{
+          text-align: center;
+     }
+table {
+    text-align: center;
+    font-size:14px;
+    /*font-weight: bold;*/ 
+}
+.wrapper {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    place-items: center;
+/*    grid-template-rows: 480px 150px; */
+    grid-template-columns: 1fr; 
+/*    grid-gap: 5px; */
+  }
+   
+table.st-tbl1 {
+text-align: center;
+position: relative;
+border-collapse: collapse; 
+font-size:12px; 
+width: 450px;
+}
+table.st-tbl1 th,
+table.st-tbl1 td{
+padding: 0.2rem;
+border: solid 1px #ddd;
+/*text-align: center; */
+}
+table.st-tbl1 th {
+background: rgb(192, 228, 248);
+position: sticky;
+top: 0;
+}
+</style>
+<header class="NavigationMenu">
+    <h2>世界年表</h2>
+    <div id = "main"></div>
+    <nav>
+  <!--     <input type='button' value='イメージ表示' onclick="SelectPage(1);">
+        <input type='button' value='データ表示' onclick="SelectPage(2);">
+        <input type='button' value='page3を表示' onclick="SelectPage(3);"> -->
+    <table style="clear: both;margin:auto;font-size:14px; font-weight: bold; ">
+      <tr>
+        <TD>　時代 <select name="selPref" id="selPref" ></select></TD>
+        <TD id="cityTD">　市町村 <select name="selCity" id="selCity" onchange="cityChange()"></select></TD>
+        <TD>
+          <button type="submit" id="butn3" style="background: rgba(255, 151, 32, 0.747); " onclick="animeStop();animeStart()">連続</button></TD>
+        </TD>   
+        <TD>
+          <button type='submit' id="butn5" style="background: rgba(149, 233, 222, 0.747)" onclick="animeStop();SelectPage(3);">データ表</button>
+        </TD>
+    </tr>
+    </table>
+    </nav>
+ </header>
+ </head>
+ <body class="body" onload="dataInitialize()">
+  <div id='page1' class='wrapper'>
+        <div class="box1" style="margin:0 auto; text-align: right">
+          <div style="display:block ; clear:both">
+            <canvas class="bcanvas" id="myCanvas"  width="1200" height="400"></canvas>
+          </div>
+          <div>
+            <canvas class="bcanvas" id="subCanvas" width="1200" height="400" ></canvas>
+          </div>
+        </div>
+  </div>
+  </body>
+</html>
