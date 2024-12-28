@@ -1,0 +1,526 @@
+<html lang="ja">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="{{ url_for('static', filename='nenpyo-table.js') }}"></script>
+<title>世界年表２</title>
+<!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+<style>
+  @media screen and (max-width: 768px) {
+    .wrapper {
+        display: grid;
+        grid-gap: 10px;
+      }
+    }
+
+  @media screen and (max-width: 480px) {
+    .dcanvas {
+        background: #eeeeee; display: inline; margin: auto ;
+        padding: auto; max-width: 100% ;height: auto;
+        width:300px;
+    } 
+/*          .table1{
+      margin: auto; 
+      grid-column-start: 1;
+      grid-row-start: 2;
+      
+    }
+    .table2{
+      margin: auto; 
+      grid-column-start: 1;
+      grid-row-start: 4;
+      
+    }　*/
+  }
+
+main {
+  background-color: #f1bed2; /*青色*/
+  text-align: center;
+}          
+.dcanvas {
+   background: #eeeeee; display: inline; margin: auto ;
+   padding: auto; max-width: 100% ;height: auto;
+  } 
+.bcanvas {
+   background: #fdfccbfd; 
+   float: left;
+   margin:0 auto ;
+   padding: auto;
+/*   width: 380; */
+/*   max-width: 100% ;*/
+   height: auto;
+} 
+.page1 {
+    display: flow-root;
+    margin:0 auto; 
+    align-items: center;
+    place-items: center;
+}
+button { width: 80px;height: 40px;background: #3ee7; color: black; 
+          padding:5px 0 5px;
+          border-radius: 5px;
+          display: inline; font-size:16px; font-weight: bold; 
+          align-items: center ;
+       }
+.body{
+          text-align: center;
+     }
+     table {
+    text-align: center;
+    font-size:10px;
+    /*font-weight: bold;*/ 
+}
+   
+table.st-tbl1 {
+text-align: left;
+position: relative;
+font-size:10px; 
+table-layout:fixed; 
+width:100%
+
+}
+table.st-tbl1 th,
+table.st-tbl1 TH{
+padding: 0.2rem;
+border: solid 1px #ddd;
+text-align: center;
+font-size:12px;
+resize: horizontal;
+overflow: hidden; 
+}
+table.st-tbl1 th {
+background: rgb(192, 228, 248);
+z-index: 10;
+position: sticky;
+top: 70px;
+}
+table.st-tbl1 td {
+  font-size:10px;
+  text-align: start;
+  margin-top: 0;
+  padding: 0;
+  vertical-align: top;
+  height: 100px;
+  text-overflow: ellipsis; 
+  overflow: hidden; /*ここが一番効いた*/
+}
+.pmenu {
+  position: relative;
+  flex: 1;
+  cursor: pointer;
+  font-size:14px;
+  font-weight: bold;
+/*  width: 200px; 
+  padding-left: 10px;
+  padding-right: 10px;*/
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  text-align: center;
+  align-items: center;
+}
+.pmenu li{
+	border-bottom: 1px solid rgb(241, 41, 15);
+}
+.submenu {
+  list-style: none;
+  position: absolute;
+  display: block;
+  z-index: 20;
+  width: 180px;
+  top: 20px;
+  clear: both;
+  align-items: center;
+  text-align: center;
+  padding: 10px 0 10px 0;
+  background-color: var(--back-color);
+/*   margin-top: 25px;
+  
+
+ transition: 0.3192s cubic-bezier(0.04, 0.04, 0.12, 0.96) 0.1008s;
+  transform: scale(1, 0);
+  transform-origin: top;*/
+  visibility: hidden;
+}
+.submenu ul{
+  text-align: left;
+}
+.submenu li{
+/*  display: flex;
+  justify-content: center;*/
+  width:100%;
+  padding: 5px 0 5px 0;
+  align-items: left;
+}
+
+.pmenu:hover {
+  background-color: var(--back-color); 
+}
+.pmenu:hover .submenu {
+/*	background-color: var(--back-color);   */
+  transition: all 0.3s;
+  visibility: visible;
+
+}
+.pmenu:active .submenu {
+	/*	background-color: var(--back-color);   */
+	  transition: all 0.3s;
+	  visibility: hidden;
+	
+}
+.tableul {
+    text-align: left;
+/*    list-style-type:circle */
+    list-style-type: '';
+    text-wrap: nowrap; 
+    text-overflow: ellipsis;
+    margin: 0;
+    padding-left: 1em;
+    position: relative;
+
+}
+.tableul td{
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  /*white-space: nowrap;
+  text-overflow: ellipsis;*/
+}
+/*.tableul td:hover{
+  background-color: rgb(230, 218, 251);
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tableul:hover td{
+  background-color: rgb(135, 207, 164);
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}*/
+.tableul:hover{
+  background-color: rgb(243, 209, 190);
+  overflow:visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width:160%;
+}
+.tableul:hover  .irotext{
+  background-color: rgb(237, 233, 231);
+  z-index: 200;
+  font-weight: bold;
+  opacity: 1;
+}
+/*.irotext{
+  background-color: white;
+}*/
+.tablepmenu {
+  cursor: pointer;
+  list-style: '▼';
+  position: relative;
+  text-align: left;
+  align-items: left;
+  padding: auto;
+  pointer-events: auto;
+/*  list-style: none;*/
+}
+.teblesubitem {
+  list-style: none;
+  z-index: 10;
+  position: absolute;
+/*  display: inline-block;
+clear: both;*/
+  display: block;
+  align-items: left;
+  text-align: left;
+  width: 150%;
+  background-color: rgb(200, 243, 245);
+  visibility: hidden;
+  overflow:visible;
+  padding:0;
+  margin:0px;
+}
+.teblesubitem li{
+    text-align: left;
+   /* overflow: hidden;*/
+   /* white-space: nowrap;*/
+    text-overflow: ellipsis;
+}
+
+.tablepmenu:hover {
+  background-color: rgb(211, 243, 187); 
+  
+}
+.tablepmenu:hover .teblesubitem {
+/*	background-color: var(--back-color);   */
+  transition: all 0.3s;
+  visibility: visible;
+
+}
+
+</style>
+<header class="NavigationMenu">
+    <h2>世界年表</h2>
+    <div id = "main"></div>
+    <nav>
+    </nav>
+ </header>
+ </head>
+ <body class="body" onload="Initialize()">
+  <details class="detail1">
+    <summary>
+      設定
+    </summary>
+    <header class="NavigationMenu">
+    <div class="bord_div" >
+          <lael>隠す</lael>
+          <input type='checkbox' name='checkDispCat' value=3 onchange='selectItems(0)'>日本
+          <input type='checkbox' name='checkDispCat' value=4 onchange='selectItems(1)'>欧米
+          <input type='checkbox' name='checkDispCat' value=5 onchange='selectItems(2)'>アジア
+          <input type='checkbox' name='checkDispCat' value=6 onchange='selectItems(3)'>科学・芸術（日本）
+          <input type='checkbox' name='checkDispCat' value=7 onchange='selectItems(4)'>科学・芸術（欧米）
+          <div align="center"> 開始年 <input  type="input" id="inputFrom"  value="1600" required; style="width:4em"></div>
+          <div align="center" >
+            <button class="button" type="submit" style="background: rgb(189, 240, 179);" id="kikan" onclick="ChangePeriod()">表示更新</button>
+        </div>
+        <P></P>
+    </div>
+    <div>        
+     <details id=pattern1> 
+     </details>
+    </div>
+    </div> 
+    <div align="left"><input  type="input" id="seachString"  value="" required; style="width:10em">
+        <button class="button" type="submit" style="background: rgb(179, 226, 240);" id="searchBtn" onclick="searchItem()">検索</button>
+    </div></header>
+ </details>
+  <table id="table" class="st-tbl1" style="clear: both;margin:auto;font-size:14px; font-weight: bold; ">
+    <tr>
+      <TH>年 </TH>
+      <TH>時代</TH>
+      <TH>将軍</TH>
+      <TH style="visibility: inherit;">日本</TH>
+      <TH id="dynamicTH">
+        <ul style="list-style: none;" >
+          <li class="pmenu" ontouchstart="">欧米
+             <ul class="submenu">
+                  <select id="shisetuCheck" style="font-weight: bold;width: 100%" onchange="disp_hidden(2)">
+                  <option value="0">表示・非表示</option>
+                  <option value="1">ローマ</option>
+                  <option value="2">ギリシア</option>
+                  <option value="3">神聖ローマ</option>
+                  <option value="4">オスマン帝国</option>
+                  <option value="5">ゲルマニア</option>
+                  <option value="6">フランク王国</option>
+                  <option value="7">ビザンツ帝国</option>
+                  <option value="8">仏</option>
+                  <option value="9">英</option>
+                  <option value="A">伊</option>
+                  </select>
+              </ul> 
+          </li>
+          </ul>    
+      </TH>
+      <TH>アジア</TH>
+      <TH>科学・芸術（日本）</TH>
+      <TH>科学・芸術（欧米）</TH>
+    </tr>
+    <tr><td>1240</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="tableul">
+          <ul >
+            <li style="list-style:none;">
+                <details class="detail1">
+                    <summary>
+                        1240:バトゥの率いるモンゴル軍、キエフを占領。
+                    </summary>
+                        1240:キエフ公国滅亡しロシアの「タタールのくびき」始まる。<br>1240:ロシアのアレクサンドル・ネフスキー、ネヴァ河の戦いでスウェーデン軍を破る。
+                 </detail>
+            </li>
+            <li>1241:ワールシュタットの戦い。モンゴル軍がポーランド・ドイツの連合軍を破る。</li>
+            <li>1242:ロシアのアレクサンドル・ネフスキー、ドイツ騎士団を氷上の戦いで撃退。</li>
+            <li>1243:バトゥ、南ロシアにキプチャク・ハン国を建てる。</li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li>1248:フランス国王ルイ９世が主唱し第６回十字軍派遣。</li>
+            <li>
+              <details class="detail1">
+                <summary>
+                    1249:バトゥの率いるモンゴル軍、キエフを占領。
+                </summary>
+                    <ul>
+                      <li>1249:キエフ公国滅亡しロシアの「タタールのくびき」始まる。</li>
+                      <li>1249:bbbbbbbbキエフ公国滅亡しロシアの「タタールのくびき」始まる。BBBBB</li>
+                      <li>1249:bbbbbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvBBB</li>
+                      <li>1249:b4444444bbbbbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvBBB</li>
+                    </ul>
+                    
+             </detail>
+            </li>    
+        </ul>
+        </td>
+        <td  class="tableul"><ul>
+            <li><span class="irotext">1240:この頃、タイ人、自立しスコータイ朝を建てる。</span></li>
+            <li><span class="irotext">1241:大モンゴル国のバトゥ、ハンガリー王国軍を破る。（ムヒの戦い）</span></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li><span class="irotext"></span>1246:プラノ＝カルピニ、モンゴルの都カラコルムに至る。</span></li>
+            <li></li>
+            <li></li>
+            <li></li>  
+        </ul>
+        </td>
+        <td></td>
+        <td class="tableul"><ul >
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li><span class="irotext">1248:ケルン大聖堂の建造始まる。</span></li>
+            <li></li>
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>1270</td>
+        <td></td>
+        <td></td>
+        <td class="tableul"><ul >
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li><span class="irotext">1274:文永の役：フビライ第１回目の日本遠征</span></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+                        
+        </ul></td>
+        <td class="tableul"><ul style="position: absolute; display: block;">
+            <li><span class="irotext">1270:フランス王ルイ９世、第７回十字軍。（十字軍の最後）</span></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li><span class="irotext">1278:ベーメン王国のオタカル２世、神聖ローマ帝国皇帝ハプスブルク家のルードルフと戦い敗れる。</span></li>
+            <li></li>
+            </ul>  
+        </td>            
+        <td class="tableul"><ul >
+            <li><span class="irotext">1270:高麗で三別抄の乱起こる。</span></li>
+            <li><span class="irotext">1271:フビライ、国号を元に改める。</span></li>
+            <li><span class="irotext">1272:フビライ、首都を大都（現在の北京）と改称。</span></li>
+            <li><span class="irotext">1273:三別抄の乱鎮圧される。</span></li>
+            <li></li>
+            <li><span class="irotext">1275:マルコ＝ポーロ、元の都大都に入る。</span></li>
+            <li><span class="irotext">1276:フビライ、臨安を攻略、南宋を滅ぼす。</span></li>
+            <li></li>
+            <li></li>
+            <li><span class="irotext">1279:厓山の戦いで南宋、完全に滅亡</span>。</li>
+        </ul></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>1280</td>
+        <td></td>
+        <td></td>
+        <td><span class="irotext">1281:弘安の役：フビライ第２回目の日本遠征</span></td>
+        <td class="tablecell">
+          <ul class="tableul" style="position: absolute; display: block;z-index: 200;">
+            <li></li>
+            <li></li>
+            <li class="tablepmenu" ><span class="irotext">1282:エドワード１世がウェールズを征服。</span>
+                <ul class="teblesubitem">
+                    <li style="text-wrap: inherit"><span class="irotext" >1282:シチリアの晩祷事件おこる。aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavvvvvvvvvvvvvBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span></li>
+                    <li style="text-wrap: inherit"><span class="irotext">AAAA:あああああああああああああああああああああああああああああああああああああああああああああああああああああ</span></li>
+                  </ul> 
+            </li>
+            <li><span class="irotext">1283:XXXX****</span></li>
+            <li><span class="irotext">1284:X**********************************************XXX**XXXXXXXXXXX売黒黒黒黒黒黒黒**</span></li>
+            <li><span class="irotext">1285:フラグのモンゴル軍、バグダードを攻略し、アッバース朝を滅ぼす。</span></li>
+            <li><span class="irotext">1286:あああああああああああああああああああああああああああああああああああああああああ</span></li>
+            <li></li>
+            <li></li>
+            <li class="tablepmenu" ><span class="irotext">1289:長い長い文章のイベントーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー。</span>
+              <ul class="teblesubitem">
+                  <li style="text-wrap: inherit"><span class="irotext">1289:長い長い文章のイベント２ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー。</span></li>
+                  <li style="text-wrap: inherit"><span class="irotext">AAAA:３３３３３３３３３３３３３３３３３３３３３３３３３３３３３３３３４４４４４４４４４４４４４４４４４１</span></li>
+              </ul>
+          </li>
+          </ul>    
+        </td>
+        <td class="tableul"><ul >
+            <li></li>
+            <li><span class="irotext">1281:フビライ、チャンパー遠征に失敗。</span></li>
+            <li></li>
+            <li></li>
+            <li><span class="irotext">1284:元軍のベトナムへの遠征。チャンパーが撃退。</span></li>
+            <li></li>
+            <li></li>
+            <li><span class="irotext">1287:元軍のベトナムへの遠征。陳朝が一時撃退。1287:元軍のビルマ遠征。パガン朝、滅亡に向かう。</span></li>
+            <li></li>
+            <li></li>
+        </ul>
+      </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>1290</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="tableul"><ul >
+            <li></li>
+            <li class="tablepmenu" ><span class="irotext">1291:マムルーク朝軍、十字軍の最後の拠点アッコンを陥落させる。</span>
+                <ul class="teblesubitem">
+                    <li><span class="irotext">>1291:ヨハネ騎士団、本拠をロードス島に移す。</span</li>
+                    <li>1291:スイス三邦の盟約者同盟団（リュトリの誓い）</li>
+                </ul> 
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="tablepmenu" >1295:エドワード１世、模範議会を召集
+                <ul class="teblesubitem">
+                    <li>1295:イル・ハン国のガザン・ハン、イスラーム教に改宗</li>
+                </ul> 
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li>1299:&lt;トルコ&gt;オスマン・ベイがオスマン帝国を建国。</li>
+            </ul>
+        </td>
+        <td class="tableul"><ul >
+            <li>1290:デリーにハルジー朝が成立。</li>
+            <li></li>
+            <li>1292:元のフビライの遠征活動、ジャワ島に及ぶ。</li>
+            <li></li>
+            <li>1294:モンテ＝コルヴィノ、元の大都で布教を開始。</li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul></td>
+        <td></td>
+        <td></td>
+    </tr>
+  
+</table>
+</body>
+</html>

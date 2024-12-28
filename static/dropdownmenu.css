@@ -1,41 +1,3 @@
-<html lang="ja">
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<script src="{{ url_for('static', filename='nenpyo-table.js') }}"></script>
-<title>世界年表２</title>
-<!--==============レイアウトを制御する独自のCSSを読み込み===============-->
-<style>
-  @media screen and (max-width: 768px) {
-    .wrapper {
-        display: grid;
-        grid-gap: 10px;
-      }
-    }
-
-  @media screen and (max-width: 480px) {
-    .dcanvas {
-        background: #eeeeee; display: inline; margin: auto ;
-        padding: auto; max-width: 100% ;height: auto;
-        width:300px;
-    } 
-/*          .table1{
-      margin: auto; 
-      grid-column-start: 1;
-      grid-row-start: 2;
-      
-    }
-    .table2{
-      margin: auto; 
-      grid-column-start: 1;
-      grid-row-start: 4;
-      
-    }　*/
-  }
-
-main {
-  background-color: #f1bed2; /*青色*/
-  text-align: center;
-}   
 .NavigationMenu{
     position: fixed; /* ヘッダーを固定する */
     display: flex;
@@ -103,6 +65,7 @@ background: rgb(192, 228, 248);
 z-index: 300;
 position: sticky;
 top: 70px;
+border: 1px solid black;
 }
 table.st-tbl1 td {
   font-size:10px;
@@ -113,21 +76,19 @@ table.st-tbl1 td {
   height: 100px;
   text-overflow: ellipsis; 
   overflow: hidden;
+  border: 1px solid black;
 }
-/*.tablecell {
-  font-size:10px;
-  margin-top: 0;
-  padding: 0;
-  vertical-align: top;
-  height: 100px;
-  text-overflow: ellipsis; 
-  overflow: hidden; 
-}*/
+.tablecell {
+
+  border: 1px solid black;
+}
 .tablecell:hover{
  /* background-color: rgb(243, 209, 190);*/
+  background-color: rgb(230, 246, 221);
   overflow:visible;
   white-space: nowrap;
   text-overflow: ellipsis;
+  
 }
 .tablecell:hover  .tableul{
  /* background-color: rgb(151, 68, 26);*/
@@ -262,77 +223,3 @@ clear: both;*/
   background-color: rgb(200, 243, 245);
 
 } 
-
-
-</style>
-<header class="NavigationMenu">
-    <h2>世界年表</h2>
-    <details class="detail1" style="display: flow-root;">
-        <summary>
-          設定
-        </summary>
-        <header class="NavigationMenu">
-        <div class="bord_div" >
-              <lael>隠す</lael>
-              <input type='checkbox' name='checkDispCat' value=3 onchange='selectItems(0)'>日本
-              <input type='checkbox' name='checkDispCat' value=4 onchange='selectItems(1)'>欧米
-              <input type='checkbox' name='checkDispCat' value=5 onchange='selectItems(2)'>アジア
-              <input type='checkbox' name='checkDispCat' value=6 onchange='selectItems(3)'>科学・芸術（日本）
-              <input type='checkbox' name='checkDispCat' value=7 onchange='selectItems(4)'>科学・芸術（欧米）
-              <div align="center"> 開始年 <input  type="input" id="inputFrom"  value="1600" required; style="width:4em"></div>
-        </div>
-        <div>        
-         <details id=pattern1> 
-         </details>
-        </div>
-        <div align="left"><input  type="input" id="seachString"  value="" required; style="width:10em">
-            <button class="button" type="submit" style="background: rgb(179, 226, 240);" id="searchBtn" onclick="searchItem()">検索</button>
-        </div>
-     </details>
- </header>
- <body class="body" onload="Initialize()">
-  <table id="table" class="st-tbl1" style="table-layout:fixed; width:100%;font-size:14px; font-weight: bold; ">
-    <colgroup id="hiddenCol">
-      <col></col>
-      <col></col>
-      <col></col>
-      <col></col>
-      <col ></col>
-      <col></col>
-      <col></col>
-      <col></col>
-  </colgroup>
-    <tr>
-      <TH>年 </TH>
-      <TH>時代</TH>
-      <TH>将軍</TH>
-      <TH width="20%">日本</TH>
-      <TH  width="20%" id="dynamicTH">欧米
- <!--       <ul style="list-style: none;" >
-          <li class="pmenu" ontouchstart="">
-             <ul class="submenu">
-                  <select id="shisetuCheck" style="font-weight: bold;width: 100%" onchange="disp_hidden(2)">
-                  <option value="0">表示・非表示</option>
-                  <option value="1">ローマ</option>
-                  <option value="2">ギリシア</option>
-                  <option value="3">神聖ローマ</option>
-                  <option value="4">オスマン帝国</option>
-                  <option value="5">ゲルマニア</option>
-                  <option value="6">フランク王国</option>
-                  <option value="7">ビザンツ帝国</option>
-                  <option value="8">仏</option>
-                  <option value="9">英</option>
-                  <option value="A">伊</option>
-                  </select>
-              </ul> 
-          </li>
-          </ul>   --> 
-      </TH>
-      <TH width="15%" >アジア</TH>
-      <TH width="15%">科学・芸術（日本）</TH>
-      <TH width="15%">科学・芸術（欧米）</TH>
-    </tr>
-  </table>
-
-</body>
-</html>

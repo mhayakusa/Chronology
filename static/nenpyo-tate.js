@@ -653,6 +653,12 @@ function loadCSV(targetFile) {
             if (task.TaskName.includes(strings[i]) == true){
                 return "OK"
             }
+            if (task.Memo.includes(strings[i]) == true){
+                return "OK"
+            }
+            if (task.Keyword.includes(strings[i]) == true){
+                return "OK"
+            }
         }
         return "NG";        
     }
@@ -782,7 +788,7 @@ function loadCSV(targetFile) {
     }
 }
 class Task {
-    constructor(taskName, areaName, syubetu, startYear, startMonth,endYear,endMonth,dsplevel,datakbn,RelatedCountries){
+    constructor(taskName, areaName, syubetu, startYear, startMonth,endYear,endMonth,dsplevel,datakbn,RelatedCountries,Memo,Keyword){
         this.AreaName = areaName;
         this.TaskName = taskName;
         this.Syubetu = syubetu;
@@ -793,6 +799,8 @@ class Task {
         this.Dsplevel = dsplevel
         this.DataKbn = datakbn
         this.RelCountry = RelatedCountries
+        this.Memo = Memo
+        this.Keyword = Keyword
         this.dispRow = 0
         this.dispEndRow = 0
         this.dispCol = 0

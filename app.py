@@ -12,6 +12,13 @@ def main():
     return render_template('index.html')
 #    return render_template('populationmap.html')
 
+@app.route('/chronology')
+def chronology():
+    session.permanent = True  
+    session["start"] = True 
+    return render_template('Chronology.html')
+#    return render_template('populationmap.html')
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)

@@ -1,0 +1,284 @@
+body {
+    margin: 2;
+    font-family: "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;	/*フォント種類*/
+    -webkit-text-size-adjust: none;
+    --hedder-height:60px;
+    --tablefontsize:11px;
+    --hederZindex:100;
+    --menuZindex:50;
+    --tableZindex:10;
+    --tableTHZindex:20;
+    --tableTDZindex:15;
+    --tableTDOverZindex:18;
+    --back-color:#c3f9df;
+      background: #fff;	/*背景色*/
+    color: black;	    /*全体の文字色*/
+}
+header {
+	position: fixed;
+  display: flex;
+  justify-content:space-between;
+	width: 100%;
+	height: var(--hedder-height);
+	top: 0;
+	z-index: var( --hederZindex);
+  background-color:var(--back-color); /* ヘッダーの背景色を指定する */
+  padding: 0 ; 
+ 	font-size: 14px;
+	font-weight: bold;
+  text-align: center;  
+}
+.NavigationMenu{
+  display: flex;
+  flex-direction: row;
+  width:80%;
+/*  justify-content: flex-end;*/
+  /*top: 0; 
+  left: 0;  
+  padding: 10px;
+  margin: 20;
+  align-items: flex-start;*/
+}  
+.navUl{
+  display: flex;
+  flex-direction: row;
+ /* align-items: flex-start;*/
+}
+.navUl li{
+  list-style:none;
+}
+.NavigationMenu input{
+  vertical-align: top;
+  text-align: top;
+  padding-top: 0;
+}
+.dataheader {
+	z-index:var(--tableZindex);
+/*	height: 100;*/
+	display: flex;
+	flex-direction: column;
+    background: var(--background-subheader);
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.title{
+	/*display: flex;
+	background-color: rgb(254, 255, 255);*/
+	margin-top: 0px;
+	align-items: center;
+  padding: 3px,3px,0,0;
+}
+#titletext{
+	width: 150px;
+}
+   
+.dcanvas {
+   background: #eeeeee; display: inline; margin: auto ;
+   padding: auto; max-width: 100% ;height: auto;
+  } 
+.bcanvas {
+   background: #fdfccbfd; 
+   float: left;
+   margin:0 auto ;
+   padding: auto;
+/*   width: 380; */
+/*   max-width: 100% ;*/
+   height: auto;
+} 
+.page1 {
+    display: flow-root;
+    margin:0 auto; 
+    align-items: center;
+    place-items: center;
+}
+button { width: 40px;height: 30px;background: #3ee7; color: black; 
+          padding:2px 0 2px;
+          border-radius: 2px;
+          display: inline; font-size:12px; font-weight: bold; 
+          align-items: center ;
+       }
+.body{
+          text-align: center;
+     }
+table {
+    text-align: center;
+    font-size:10px;
+    /*font-weight: bold;*/ 
+}
+   
+table.st-tbl1 {
+text-align: left;
+position: relative;
+table-layout:fixed; 
+width:100%;
+font-size:11px; 
+font-weight: bold;
+margin-top: var(--hedder-height);
+
+}
+table.st-tbl1 th,
+table.st-tbl1 TH{
+padding: 0.2rem;
+border: solid 1px #ddd;
+text-align: center;
+font-size:12px;
+resize: horizontal;
+overflow: hidden; 
+}
+table.st-tbl1 th {
+background: rgb(192, 228, 248);
+z-index: var(--tableTHZindex);
+position: sticky;
+top: var(--hedder-height);
+border: 1px solid black;
+}
+table.st-tbl1 td {
+  font-size:var(--tablefontsize);
+  text-align: start;
+  margin-top: 0;
+  padding: 0;
+  vertical-align: top;
+  height: 100px;
+  text-overflow: ellipsis; 
+  overflow: hidden;
+  border: 1px solid black;
+}
+.tablecell {
+
+  border: 1px solid black;
+}
+.tablecell:hover{
+ /* background-color: rgb(243, 209, 190);*/
+  background-color: rgb(230, 246, 221);
+  overflow:visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  
+}
+.tablecell:hover  .tableul{
+ /* background-color: rgb(151, 68, 26);*/
+  z-index: var(--tableTDOverZindex);
+  font-weight: bold;
+  opacity: 1;
+}
+
+.pmenu {
+  position: relative;
+  flex: 1;
+  cursor: pointer;
+  font-size:12px;
+  font-weight: bold;
+/*  width: 200px; 
+  padding-left: 10px;
+  padding-right: 10px;*/
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  text-align: center;
+  align-items: center;
+}
+.pmenu li{
+	border-bottom: 1px solid rgb(241, 41, 15);
+}
+.submenu {
+  list-style: none;
+  position: absolute;
+  display: block;
+  z-index: var(--menuZindex);
+  width: 250px;
+  top: 20px;
+  clear: both;
+  align-items: center;
+  text-align: center;
+  padding: 10px 0 10px 0;
+  background-color: var(--back-color);
+/*   margin-top: 25px;
+  
+
+ transition: 0.3192s cubic-bezier(0.04, 0.04, 0.12, 0.96) 0.1008s;
+  transform: scale(1, 0);
+  transform-origin: top;*/
+  visibility: hidden;
+}
+.submenu ul{
+  text-align: left;
+}
+.submenu li{
+/*  display: flex;
+  justify-content: center;*/
+  width:100%;
+  padding: 5px 0 5px 0;
+  align-items: left;
+}
+
+.pmenu:hover {
+  background-color: var(--back-color); 
+}
+.pmenu:hover .submenu {
+/*	background-color: var(--back-color);   */
+  transition: all 0.3s;
+  visibility: visible;
+
+}
+.pmenu:active .submenu {
+	/*	background-color: var(--back-color);   */
+	  transition: all 0.3s;
+	  visibility: hidden;
+	
+}
+.pmenu a:checked .submenu{
+  /*	background-color: var(--back-color);   */
+    transition: all 0.3s;
+    visibility: hidden;
+  
+}
+
+.tableul {
+  text-align: left;
+/*    list-style-type:circle */
+  list-style-type: '';
+  text-wrap: nowrap; 
+  text-overflow: ellipsis;
+  margin: 0;
+  padding-left: 1em;
+  z-index: var(--tableTDZindex);
+  position: relative;
+}
+
+.tableul:hover  .colortext{
+background-color: rgb(230, 246, 221);
+z-index: (--tableTDOverZindex);
+font-weight: bold;
+opacity: 7;
+}
+.tablepmenu {
+cursor: pointer;
+list-style: '';
+position: relative;
+text-align: left;
+align-items: left;
+padding: auto;
+/*  list-style: none;*/
+}
+.teblesubitem {
+  list-style: none;
+  z-index: var(--tableTDZindex);
+/*  display: inline-block;
+clear: both;*/
+  display: block;
+  align-items: left;
+  text-align: left;
+  /*width: 150%;*/
+  background-color: rgb(200, 243, 245);
+  overflow:visible;
+  padding-left:1em;
+  margin:0px;
+}
+.teblesubitem li{
+    text-align: left;
+   /* overflow: hidden;*/
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+

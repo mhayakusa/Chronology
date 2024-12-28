@@ -1,394 +1,165 @@
-<!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>世界史年表</title>
-<style>    
-    body{
-    display: flex;
-    min-height: 100vh;
+<script src="{{ url_for('static', filename='nenpyo-table.js') }}"></script>
+<title>世界年表２</title>
+<!--==============レイアウトを制御する独自のCSSを読み込み===============-->
+<style>
+  @media screen and (max-width: 768px) {
+    .wrapper {
+        display: grid;
+        grid-gap: 10px;
+      }
     }
-    .NavigationMenu{
-        width: 250px;
-        text-align: left;
-        background-color: "white";
-        color: black;
-        font-size: 12px;
-        padding: auto;
-    }
-    .Content{
-        flex: 1;
-        background-color: #b4fab8;;
-        text-align: center;
-        margin-left: 0px;
-        
-    }
+
+  @media screen and (max-width: 480px) {
     .dcanvas {
-         background: #eeeeee; display: inline; margin: auto ;
-         padding: auto; max-width: 100% ;height: auto;
+        background: #eeeeee; display: inline; margin: auto ;
+        padding: auto; max-width: 100% ;height: auto;
+        width:300px;
     } 
-
-    button { width: 80px;height: 25px;background: #3ee7; color: black; 
-                padding:3px 0 3px;
-                border-radius: 3px;
-                display: inline; font-size:11px; font-weight: bold; 
-                align-items: center ;
-                margin:auto;
-    }
-    .buttonB { width: 35px;height: 20px;background: rgba(176, 244, 247, 0.467); color:black; 
-                padding:3px 0 3px;
-                border-radius: 3px;
-                display: inline; font-size:11px; font-weight: bold; 
-                align-items: center ;
-    }
-    table {
-          text-align: center;
-          font-size:14px;
-          /*font-weight: bold;*/ 
-    }
-   .wrapper {
-          display: grid;
-          grid-template-rows: 480px 150px; 
-          grid-template-columns: 1fr 1fr; 
-          grid-gap: 10px;
-     }
-    .bord_div {
-        border: 2px solid #0f0547;
-        /*width: 300px;
-        height: 100px;*/
-    }
- </style>
-
-</head>
- 
-<body>
-    <details class="detail1">
-        <summary>
-            <div align="right">
-                <button class="buttonB" type="submit" style="background: rgb(140, 192, 240);" id="sup" onclick="scrollUp()">▲</button>
-            </div>
-            <div align="right">
-                <button class="buttonB" type="submit" style="background:  rgb(140, 192, 240);" id="sdown" onclick="scrollDown()">▼</button>
-             </div>
-        </summary>
-        <header class="NavigationMenu">
-        <div class="bord_div" >
-            <P></P>
-            <div align="center"> 開始年 <input  type="input" id="inputFrom"  value="1600" required; style="width:4em"></div>
-            
-            <input type='checkbox' name='checkDispCat' value=2 onchange='selectItems()'>欧米
-            <input type='checkbox' name='checkDispCat' value=3 onchange='selectItems()'>アジア
-            <BR>
-            <input type='checkbox' name='checkDispCat' value=4 onchange='selectItems()'>科学・芸術（日本）
-            <BR>
-            <input type='checkbox' name='checkDispCat' value=5 onchange='selectItems()'>科学・芸術（欧米）
-            <div align="center" >
-                <button class="button" type="submit" style="background: rgb(189, 240, 179);" id="kikan" onclick="ChangePeriod()">表示更新</button>
-            </div>
-            <P></P>
-        </div>
-        <div>
-            
-         <details id=pattern1> 
-           
-          </details>
-        </div>
-        <div><details id=pattern2> 
-           
-          </details>
-        </div> 
-        <BR>
-        <div align="center">
-            スケール
-            <select name="inputScale" id="inputScale" onchange="ChangePeriod()">
-                <option value=0 selected>1.5</option>
-                <option value=1 selected>1</option>
-                <option value=2>1/2</option>
-                <option value=5>1/5</option>
-                <option value=10 >1/10</option>
-            </select>
-        </div>
-        <br>
-        <div align="left"><input  type="input" id="seachString"  value="" required; style="width:10em">
-            <button class="button" type="submit" style="background: rgb(179, 226, 240);" id="searchBtn" onclick="searchItem()">検索</button>
-        </div></header>
-     </details>
-    <div class="Content">
-     <div style="position:absolute;" height="100%">
-        <canvas style="position:absolute; background: rgb(243, 245, 244)" class="bcanvas" id="myCanvas"  width="1600" height="1200"></canvas>
-    </div>
-    <div id="DivsubCanvas" style="position:absolute; left:100; top:150; ">
-        <canvas style="position:absolute;background: rgb(241, 205, 181)" class="bcanvas" id="subCanvas"  width="500" height="200"></canvas></div>
-    </div>
-</div>
-    <script src="{{ url_for('static', filename='nenpyo-tate.js') }}"></script>
-    <script>
-        var main_element = document.getElementById('main');
-        var myCanvas = document.getElementById('myCanvas');
-        var ctx = myCanvas.getContext("2d");
-        var subCanvas = document.getElementById('subCanvas');
-        var subctx = myCanvas.getContext("2d");
-        var ganttChart = new GanttChart(myCanvas);
-        var subChrono = new SubChrono(subCanvas);
-        var ItemsArray = ['年','日本','欧米','アジア','科学・芸術（日本)','科学・芸術（欧米)']
-        var DispCountryArray= new Array();
-//        DispCountryArray["ギリシャ"] = "希"
-//        DispCountryArray["ルーマニア"] = "尼"
-        DispCountryArray["ローマ"]=["ローマ","midnightblue"]
-        DispCountryArray["ギリシア"]=["ギリシア","darkolivegreen"]
-        DispCountryArray["神聖ローマ"]=["神聖ローマ","darkred"]
-        DispCountryArray["オスマン帝国"]=["オスマン帝国","orange"]
-        DispCountryArray["ゲルマニア"]=["ゲルマニア","darkred"]
-        DispCountryArray["フランク王国"]=["フランク王国","brown"]
-        DispCountryArray["ビザンツ帝国"]=["ビザンツ帝国","darkolivegreen"]
-        DispCountryArray["仏"]=["フランス","navy"]
-        DispCountryArray["英"]=["イギリス","darkviolet"]
-        DispCountryArray["伊"]=["イタリア","olive"]
-        DispCountryArray["墺"]=["オーストリア","goldenrod"]
-        DispCountryArray["蘭"]=["オランダ","magenta"]
-        DispCountryArray["西"]=["スペイン","crimson"]
-        DispCountryArray["独"]=["ドイツ","darkred"]
-        DispCountryArray["土"]=["トルコ","orange"]
-        DispCountryArray["白"]=["ベルギー","mediumorchid"]
-        DispCountryArray["波"]=["ポーランド","orangered"]
-        DispCountryArray["葡"]=["ポルトガル","darkcyan"]
-        DispCountryArray["露"]=["ロシア","red"]
-        DispCountryArray["北欧"]=["北欧","slateblue"]
-        DispCountryArray["米"]=["アメリカ","maroon"]
-        DispCountryArray["瑞"]=["スイス","limegreen"]
-        DispCountryArray["洪"]=["ハンガリー","mediumturquoise"]
-        DispCountryArray["勃"]=["ブルガリア","lightseagreen"]
-        DispCountryArray["中東"]=["中東","burlywood"]
-        DispCountryArray["アフリカ"]=["アフリカ","tan"]
-        DispCountryArray["南米"]=["南米","purple"]
-
-
-
-        var DispAsiaCountryArray= new Array();
-        DispAsiaCountryArray["中国"] = ["中国","blue"]
-        DispAsiaCountryArray["モンゴル"] = ["モンゴル","red"]
-        DispAsiaCountryArray["印"] = ["インド","lightseagreen" ]
-        DispAsiaCountryArray["中東"] = ["中東","pink"]  
-        DispAsiaCountryArray["韓国"] = ["韓国","green"]
-        DispAsiaCountryArray["ベトナム"] = ["ベトナム","cyan"]
-        DispAsiaCountryArray["インドネシア"] = ["インドネシア","tomato"]
-        DispAsiaCountryArray["タイ"] = ["タイ","royalblue"]
-        DispAsiaCountryArray["フィリピン"] = ["フィリピン","aquamarine"]
-        DispAsiaCountryArray["ミャンマー"] = ["ミャンマー","mediumturquoise"]
-        DispAsiaCountryArray["カンボジア"] = ["カンボジア","gold"]
-        DispAsiaCountryArray["シンガポール"] = ["シンガポール","darkorange"]
-        DispAsiaCountryArray["朝鮮"] = ["朝鮮","red"]
-
-        var subDispSw = false
-        
-        subChrono.SetDisplay('none')
-
-        var FromYear = document.getElementById('inputFrom').value
-        var scaleVal = document.getElementById("inputScale").value;
-        var checkCountry = document.getElementById("pattern1")
-        var checkbox = ' <summary id=checkCountory >国選択：欧州 <div>表示 <input  type="input" id="selCountry"  value=""  style="width:12em" onchange="SelectCountry()"></div></summary>'
-        var Carrayleng = Object.keys(DispCountryArray).length
-        var checkboxAsia = ' <summary id=checkAsiaCountry >国選択：アジア <div>表示 <input  type="input" id="selAsiaCountry"  value=""  style="width:12em" onchange="SelectAsiaCountry()"></div></summary>'
-        var checkAsiaCountry = document.getElementById("pattern2")
-        var cc = 0
-        checkbox = checkbox + "<b><table><tr>" 
-        for (let key in DispCountryArray) {  
-            checkbox = checkbox + "<td  align='left'><input type='checkbox' name='checkboxCountry' " 
-            checkbox = checkbox + "value='" +key+"'"+ "onchange='CheckCountry()'>" 
-            checkbox = checkbox + '<font size= "2" color="' + DispCountryArray[key][1] + '">' + DispCountryArray[key][0] + '</font></td>' 
-            if (cc == 1){
-                checkbox += "</tr><tr>"
-                cc  = 0
-            } else{
-                cc += 1
-            }
-        }
-        checkbox += "</tr></table></b>"
-        checkCountry.innerHTML = checkbox
-
-        checkboxAsia = checkboxAsia + "<table><tr>" 
-        cc = 0
-        for (let key in DispAsiaCountryArray) {    
-            checkboxAsia = checkboxAsia + "<td  align='left'><input type='checkbox' name='checkboxAsiaCountry' " 
-            checkboxAsia = checkboxAsia + "value='" +key+"'"+ "onchange='CheckAsiaCountry()'>" 
-            checkboxAsia = checkboxAsia + '<font size= "2"  color="' + DispAsiaCountryArray[key][1] + '"><b>' + DispAsiaCountryArray[key][0] + '</b></font></td>' 
-            if (cc == 1){
-                checkboxAsia += "</tr><tr>"
-                cc  = 0
-            } else{
-                cc += 1
-            }
-//            var label = document.createElement('label');
-//            label.textContent = key;
-//            checkCountry.appendChild(label)
-        }
-        checkboxAsia += "</tr></table>"
-        checkAsiaCountry.innerHTML = checkboxAsia
-
-        ganttChart.SetGanttChartFirstDay(FromYear);
-        ganttChart.SetScale(scaleVal);
-        ganttChart.DrawChart();
- 
-
-        //let csvData = loadCSV("./test.csv");
-        let targetFile = "/static/japan-hist.csv"
-        var request = new XMLHttpRequest();
-        request.open("get", targetFile, false);
-        request.send(null);
- 
-        // 読み込んだCSVデータ
-        var csvData = request.responseText;
-            
-        // CSVの全行を取得
-        var lines = csvData.split("\n");
-        var tasks = [];
-        for (var i = 1; i < lines.length-1; i++) {
-            // 1行ごとの処理
-
-            var taskSet = lines[i].split(",");
-
-//            var wordData = {
-//                name: wordSet[0],
-//                age: wordSet[1],
-//            };
-//              (taskName, areaName, syubetu, startYear, startMonth,endYear,endMonth)
-            tasks.push(new Task(taskSet[3],taskSet[6],taskSet[2],taskSet[0],taskSet[1],taskSet[4],taskSet[5],taskSet[7],taskSet[8],taskSet[9]));
-        }
-
-        ganttChart.SetSchedules(tasks);
-//---------------------------------　サブルーチン群　-----------------------------------------------------
-        function createCheckBox(summaryText,dispText,cId,changeFunc,dispArray){
-            var checkbox = ' <summary id=checkCountory >国選択：欧州 <div>表示 <input  type="input" id="selCountry"  value=""  style="width:12em" onchange="SelectCountry()"></div></summary>'
-            checkbox = checkbox + "<table><tr>" 
-            for (let key in DispCountryArray) {    
-            
-                checkbox = checkbox + "<td align='left'><input type='checkbox' name='checkboxCountry' value=" + "'"+DispCountryArray[key]+"'"+ "onchange='CheckCountry()'>" + key +"</td>"
-                if (cc == 1){
-                    checkbox += "</tr><tr>"
-                    cc  = 0
-                } else{
-                    cc += 1
-                }
-            }
-        }
-
-        function ChangePeriod(){
-            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
-
-            let FromYear = document.getElementById('inputFrom').value
-            var scaleVal = document.getElementById("inputScale").value;
-
-            ganttChart.SetGanttChartFirstDay(FromYear);
-            ganttChart.SetScale(scaleVal);
-            ganttChart.DrawChart();
-            ganttChart.SetSchedules(tasks);
-
-        }
-        function scrollUp(){
-            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
-            
-            var newYear = ganttChart.scrollUp();
-            document.getElementById('inputFrom').value = newYear
-        }
-        function scrollDown(){
-            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height)
-            var newYear = ganttChart.scrollDown();
-            document.getElementById('inputFrom').value = newYear
-
-        }
-        function SelectCountry(){
-            ganttChart.SetDispCountry(document.getElementById('selCountry').value) 
-        }
-        function SelectAsiaCountry(){
-            ganttChart.SetDispAsiaCountry(document.getElementById('selAsiaCountry').value) 
-        }
-        function CheckCountry(){
-            var checks = document.getElementsByName('checkboxCountry');
-            var str = '';
-
-            for ( i = 0; i <Carrayleng; i++) {
-                if ( checks[i].checked === true ) {
-                    if (str == ''){
-                        str = checks[i].value ;
-                    }else{
-                        str = str + ":" + checks[i].value    
-                    }
-                        
-                }
-            }
-            document.getElementById('selCountry').value = str
-            SelectCountry()
-        }
-        function CheckAsiaCountry(){
-            var checks = document.getElementsByName('checkboxAsiaCountry');
-            var arrayleng = Object.keys(this.DispAsiaCountryArray).length
-            var str = '';
-
-            for ( i = 0; i <arrayleng; i++) {
-                if ( checks[i].checked === true ) {
-                    if (str == ''){
-                        str = checks[i].value ;
-                    }else{
-                        str = str + ":" + checks[i].value    
-                    }
-                        
-                }
-            }
-            document.getElementById('selAsiaCountry').value = str
-            SelectAsiaCountry()
-        }
-        function selectItems(){
-            let checks = document.getElementsByName('checkDispCat');
-            var dispCols = [0,1]; //日本は常に表示するため初期値に0をセット
-
-            for ( i = 0; i <4; i++) {
-                if ( checks[i].checked === true ) {
-                    dispCols.push(Number(checks[i].value)) ;                        
-                }
-            }
-            ganttChart.dispItemsCol= dispCols.concat()
-            console.log("items[]"+ganttChart.dispItemsCol)
-        }
-        function searchItem(){
-            var strings = document.getElementById('seachString').value
-            ganttChart.SetSearchStings(strings,tasks);
-            
-        }
-        
-        function subChronoDisp(){
-            if (subDispSw) {
-                subDispSw = false
-                subChrono.SetDisplay('none')
-            } else {
-                subChrono.SetTexts("text　これはテスト ", 20, 40,150)
-                subChrono.SetPosition(180,80)
-                subChrono.SetTexts("text　これはテスト ", 20, 40,150)
-                subDispSw = true
-                subChrono.SetDisplay('block')
-            }
-        }
-        function dataindex(openurl){
-//        layerNum = 0
+/*          .table1{
+      margin: auto; 
+      grid-column-start: 1;
+      grid-row-start: 2;
       
-//	      for(i = 0;i < 2 ;i++){
-//            cbox = document.getElementById('layer_visible0:' + String(i));
-//            if (cbox==null){break}
-//            if (cbox.checked == true){
-//              console.log("check find"+ cbox)
-//              layerNum = i
-//            } 
-//        }
-          layertxt = document.getElementById('datalayer');
-          if ( layertxt.innerHTML == ""){
-            layertxt.innerHTML = "全国"
-          } 
+    }
+    .table2{
+      margin: auto; 
+      grid-column-start: 1;
+      grid-row-start: 4;
+      
+    }　*/
+  }
 
-          win1 = window.open("search.html", "data window", "width=1000,height=800,menubar=yes,toolbar=yes,scrollbars=yes")
-          subwin.push(win1)
-/*          win1 = window.open(openurl,  '_blank', 'toolbar=0,location=0,menubar=0'); */
-       }
-    </script>
- 
+main {
+  background-color: #f1bed2; /*青色*/
+  text-align: center;
+}   
+</style>
+<link rel="stylesheet" href="/static/detailmenu.css" />
+
+<header >
+    <h3 width="150px">世界年表</h3>
+    <div class="NavigationMenu" >
+      <ul class="navUl" style="flex:1;list-style: none;">
+        <li class="pmenu" ontouchstart="">表の設定
+          <ul class="submenu">
+              <li>
+                <details > 
+                  <summary >列を非表示</summary>
+                  <table style="text-align: left;">
+                      <tr> 
+                        <td><input type='checkbox' name='checkDispCat' value=3 onchange='selectItems(0)'>日本</td>
+                        <td><input type='checkbox' name='checkDispCat' value=4 onchange='selectItems(1)'>欧米</td>
+                      </tr>
+                      <tr>
+                        <td><input type='checkbox' name='checkDispCat' value=5 onchange='selectItems(2)'>アジア</td>
+                      </tr>
+                      <tr>
+                        <td><input type='checkbox' name='checkDispCat' value=6 onchange='selectItems(3)'>科学・芸術（日本）</td>
+                        <td><input type='checkbox' name='checkDispCat' value=7 onchange='selectItems(4)'>科学・芸術（欧米）</td> 
+                      </tr>
+                    </table>
+                  </details > 
+                </li>
+                <li>
+                  <details >
+                      <summary>文字の大きさ</summary>
+                      <input type='radio' name='tablefontsize' value=1 onchange='fontChange(0)'>大
+                      <input type='radio' name='tablefontsize' value=2  checked onchange='fontChange(1)'>中
+                      <input type='radio' name='tablefontsize' value=3 onchange='fontChange(2)'>小
+                    </details> 
+              </li>
+            </ul>
+        </li>
+        <li class="pmenu" ontouchstart="">表示国選択
+          <ul class="submenu">
+            <li>
+              <details id=pattern1 style="padding-left: 10px;"> 
+                <summary id=checkCountory >欧州</summary>
+                <div id="checktable">
+                </div>
+              </details>
+            </li>
+            <li>
+              <details> 
+                <summary id=checkCountory >アジア</summary>
+                <div >
+                </div>
+              </details>
+            </li>
+            <li>
+              <button  type="submit" id="selCountry"  onclick="SelectCountry()">変更
+            </li>
+          </ul>
+        </li>
+        <li class="pmenu" ontouchstart="">表示開始年
+          <ul class="submenu">
+            <li>
+              <input  type="input" id="inputFrom"  value="100" required; style="align-items: center; width:4em" onchange="jumppage()">
+            </li>
+          </ul>
+        </li>
+        <li>
+          <div style="padding: 0 10px;" >
+            <input  type="input" id="seachString"  value="" required; style="width:10em">
+            <button class="button" type="submit" style="background: rgb(179, 226, 240)" id="searchBtn" onclick="searchItem()">検索</button>
+          </div>
+        </li>
+    </ul>
+        
+  </div>
+    <!--        <search>
+          <form action="./search/">
+            <input type="search" id="movie" name="q" />
+            <button type="submit">検索</button>
+          </form>
+        </search> -->
+</header>
+ <body class="body" onload="Initialize()">
+  <table id="table" class="st-tbl1" >
+    <colgroup id="hiddenCol">
+      <col></col>
+      <col></col>
+      <col></col>
+      <col></col>
+      <col ></col>
+      <col></col>
+      <col></col>
+      <col></col>
+  </colgroup>
+    <tr>
+      <TH>年 </TH>
+      <TH>時代</TH>
+      <TH>将軍</TH>
+      <TH width="20%">日本</TH>
+      <TH  width="20%" id="dynamicTH">欧米
+ <!--       <ul style="list-style: none;" >
+          <li class="pmenu" ontouchstart="">
+             <ul class="submenu">
+                  <select id="shisetuCheck" style="font-weight: bold;width: 100%" onchange="disp_hidden(2)">
+                  <option value="0">表示・非表示</option>
+                  <option value="1">ローマ</option>
+                  <option value="2">ギリシア</option>
+                  <option value="3">神聖ローマ</option>
+                  <option value="4">オスマン帝国</option>
+                  <option value="5">ゲルマニア</option>
+                  <option value="6">フランク王国</option>
+                  <option value="7">ビザンツ帝国</option>
+                  <option value="8">仏</option>
+                  <option value="9">英</option>
+                  <option value="A">伊</option>
+                  </select>
+              </ul> 
+          </li>
+          </ul>   --> 
+      </TH>
+      <TH width="15%" >アジア</TH>
+      <TH width="15%">科学・芸術（日本）</TH>
+      <TH width="15%">科学・芸術（欧米）</TH>
+    </tr>
+  </table>
+
 </body>
 </html>
