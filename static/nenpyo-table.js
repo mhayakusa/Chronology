@@ -1,46 +1,59 @@
 var tasks = [];
-var kigenzenn = ["新石器時代","紀元前４世紀以前","紀元前３世紀","紀元前２世紀","紀元前１世紀"]
+var kigenzenn = ["紀元前７世紀以前","紀元前６世紀","紀元前５世紀","紀元前４世紀","紀元前３世紀","紀元前２世紀","紀元前１世紀"]
 var yeartable= []
-//var thtable=["年",時代,将軍,日本,欧米,アジア,科学・芸術（日本）,科学・芸術（欧米）]
+//var thtable=["アジア","アジア","アジア","年",時代,将軍,日本,欧米,アジア,科学・芸術（日本）,科学・芸術（欧米）]
 var yearRow = []
 var cellCount = 10
 var DispCountryArray= new Array();
-DispCountryArray["ローマ"]=["ローマ","midnightblue"]
-DispCountryArray["ギリシア"]=["ギリシア","darkolivegreen"]
-DispCountryArray["神聖ローマ"]=["神聖ローマ","darkred"]
-DispCountryArray["オスマン帝国"]=["オスマン帝国","orange"]
-DispCountryArray["ゲルマニア"]=["ゲルマニア","darkred"]
-DispCountryArray["フランク王国"]=["フランク王国","brown"]
-DispCountryArray["ビザンツ帝国"]=["ビザンツ帝国","darkolivegreen"]
-DispCountryArray["仏"]=["フランス","navy"]
-DispCountryArray["英"]=["イギリス","darkviolet"]
-DispCountryArray["伊"]=["イタリア","olive"]
-DispCountryArray["墺"]=["オーストリア","goldenrod"]
-DispCountryArray["蘭"]=["オランダ","magenta"]
-DispCountryArray["西"]=["スペイン","crimson"]
-DispCountryArray["独"]=["ドイツ","darkred"]
-DispCountryArray["土"]=["トルコ","orange"]
-DispCountryArray["白"]=["ベルギー","mediumorchid"]
-DispCountryArray["波"]=["ポーランド","orangered"]
-DispCountryArray["葡"]=["ポルトガル","darkcyan"]
-DispCountryArray["露"]=["ロシア","red"]
-DispCountryArray["北欧"]=["北欧","slateblue"]
-DispCountryArray["米"]=["アメリカ","maroon"]
-DispCountryArray["瑞"]=["スイス","limegreen"]
-DispCountryArray["洪"]=["ハンガリー","mediumturquoise"]
-DispCountryArray["勃"]=["ブルガリア","lightseagreen"]
-DispCountryArray["中東"]=["中東","burlywood"]
-DispCountryArray["アフリカ"]=["アフリカ","tan"]
-DispCountryArray["南米"]=["南米","purple"]
+DispCountryArray["ローマ"]=["欧米","ローマ","midnightblue"]
+DispCountryArray["ギリシア"]=["欧米","ギリシア","darkolivegreen"]
+DispCountryArray["神聖ローマ"]=["欧米","神聖ローマ","darkred"]
+DispCountryArray["オスマン帝国"]=["欧米","オスマン帝国","orange"]
+DispCountryArray["ゲルマニア"]=["欧米","ゲルマニア","darkred"]
+DispCountryArray["フランク王国"]=["欧米","フランク王国","brown"]
+DispCountryArray["ビザンツ帝国"]=["欧米","ビザンツ帝国","darkolivegreen"]
+DispCountryArray["仏"]=["欧米","フランス","navy"]
+DispCountryArray["英"]=["欧米","イギリス","darkviolet"]
+DispCountryArray["伊"]=["欧米","イタリア","olive"]
+DispCountryArray["墺"]=["欧米","オーストリア","goldenrod"]
+DispCountryArray["蘭"]=["欧米","オランダ","magenta"]
+DispCountryArray["西"]=["欧米","スペイン","crimson"]
+DispCountryArray["独"]=["欧米","ドイツ","darkred"]
+DispCountryArray["土"]=["欧米","トルコ","orange"]
+DispCountryArray["白"]=["欧米","ベルギー","mediumorchid"]
+DispCountryArray["波"]=["欧米","ポーランド","orangered"]
+DispCountryArray["葡"]=["欧米","ポルトガル","darkcyan"]
+DispCountryArray["露"]=["欧米","ロシア","red"]
+DispCountryArray["北欧"]=["欧米","北欧","slateblue"]
+DispCountryArray["米"]=["欧米","アメリカ","maroon"]
+DispCountryArray["瑞"]=["欧米","スイス","limegreen"]
+DispCountryArray["洪"]=["欧米","ハンガリー","mediumturquoise"]
+DispCountryArray["勃"]=["欧米","ブルガリア","lightseagreen"]
+DispCountryArray["中東"]=["欧米","中東","burlywood"]
+DispCountryArray["アフリカ"]=["欧米","アフリカ","tan"]
+DispCountryArray["南米"]=["欧米","南米","purple"]
+
+DispCountryArray["中国"] =["アジア","中国","blue"]
+DispCountryArray["モンゴル"] =["アジア","モンゴル","red"]
+DispCountryArray["印"] =["アジア","インド","lightseagreen" ]
+DispCountryArray["中東"] =["アジア","中東","pink"]  
+DispCountryArray["韓国"] =["アジア","韓国","green"]
+DispCountryArray["ベトナム"] =["アジア","ベトナム","cyan"]
+DispCountryArray["インドネシア"] =["アジア","インドネシア","tomato"]
+DispCountryArray["タイ"] =["アジア","タイ","royalblue"]
+DispCountryArray["フィリピン"] =["アジア","フィリピン","aquamarine"]
+DispCountryArray["ミャンマー"] =["アジア","ミャンマー","mediumturquoise"]
+DispCountryArray["カンボジア"] =["アジア","カンボジア","gold"]
+DispCountryArray["シンガポール"] =["アジア","シンガポール","darkorange"]
+DispCountryArray["朝鮮"] =["アジア","朝鮮","red"]
 
 var matchTask = []
 var matchRow = []
 
-
 function Initialize() {
 
     createCheckBox()
-    var selectCountryEuro = []
+    var nullArray = []
 
     var csvData =loadCSV("/static/japan-hist.csv")
         
@@ -74,7 +87,7 @@ function Initialize() {
     }
 
     tableinit(); //年の行数分の空のテーブルを生成
-    createChronoTable(tasks,selectCountryEuro)
+    createChronoTable(tasks,nullArray,nullArray)
 
 
 }
@@ -90,7 +103,7 @@ function loadCSV(targetFile) {
     return csvData
 
 }
-function createChronoTable(tasks,SelectCountry){
+function createChronoTable(tasks,EuroCountry,AisaCountry){
     var table = document.getElementById("table")
     debcount = 0
     for(dispdata of tasks){
@@ -123,7 +136,7 @@ function createChronoTable(tasks,SelectCountry){
                 dispCol = dispCol + 3
             }
         }
-        createTDdata(table,dispdata,dispRow,dispCol,SelectCountry)
+        createTDdata(table,dispdata,dispRow,dispCol,EuroCountry,AisaCountry)
 
     }
     //#table > tbody > tr:nth-child(2) > td
@@ -162,68 +175,96 @@ function tableinit(){
 function CalcDispRow(year){
     
     StartYear = Number(year)
-    if (StartYear < -400){
+    if (StartYear < -600){
         return 1;
-    }else if (StartYear < -300){
+    }else if (StartYear < -500){
         return 2;
-
-    }else if (StartYear < -200){
+    }else if (StartYear < -400){
         return 3;
-
-    }else if (StartYear < -100){
+    }else if (StartYear < -300){
         return 4;
 
-    }else if (StartYear < 0){
+    }else if (StartYear < -200){
         return 5;
+
+    }else if (StartYear < -100){
+        return 6;
+
+    }else if (StartYear < 0){
+        return 7;
     }
     /*  BCは数値の比較　*/
-    for (ii = 5; ii < yeartable.length;ii++){
+    for (ii = 7; ii < yeartable.length;ii++){
         if (StartYear < Number(yeartable[ii])){
             return ii ;
         }
     }
 
 }
-function createTDdata(tableElm,dispData,tdRow,tdCol,SelectCountry){
+function createTDdata(tableElm,dispData,tdRow,tdCol,euroArray,asiaArray){
     /* 表示対象かチェックする */
-    if (dispData.AreaName =="欧米" && dispData.RelCountry != ""){
-        if(SelectCountry.length > 0){
-            let CountryArray = dispData.RelCountry.split(':')
-            let matchFlag = false;
-            for(rc of CountryArray){
-                if(SelectCountry.includes(rc)){
-                    matchFlag = true;
-                    break;
-                }
-            }
-            if (matchFlag == false){return}
-        }
+    let check = ""
+    if (tdCol ==4 ){
+         check =  checkCountry(euroArray,dispData.RelCountry)
+    } else if (tdCol ==5 ) {
+         check =  checkCountry(asiaArray,dispData.RelCountry)
+    } else {
+        check = "OK"
     }
+
+    if (check == "NG"){
+
+        return
+    }
+ //   if(tdCol ==4 || tdCol ==5){
+ //       if(Number(dispData.StartYear) > 1500 &&  Number(dispData.StartYear) < 1800){
+  //          console.log(dispData.StartYear+":"+ dispData.TaskName+":"+dispData.AreaName+":"+dispData.RelCountry)
+  //          console.log(euroArray)
+  //          console.log(asiaArray)   
+  //      } 
+ //   }
 
     cellElm = tableElm.rows[tdRow].cells[tdCol]
     cellElm.setAttribute("class","tablecell")
 
     tmpst = cellElm.innerHTML
-    if(tdRow < 5){
-        tmpst = tmpst + dispData.TaskName + "<BR>"
-        tableElm.rows[tdRow].cells[tdCol].innerHTML = tmpst
-        return;
 
-    }
-
-    if (tmpst==""){
-        
+    if (tmpst=="" ){
         var ulElm =document.createElement('ul');
         ulElm.setAttribute("class","tableul")
-        for(let ii=0;ii<10;ii++){
-            var li = document.createElement('li');
-            ulElm.appendChild(li);
-        }
-        cellElm.appendChild(ulElm)
+        
+        if (tdRow > 1){
+                /* 最古のデータ以外が1セル10個に集約*/        
+            for(let ii=0;ii<10;ii++){
+                var li = document.createElement('li');
+                ulElm.appendChild(li);
+            }
+        } 
+        cellElm.appendChild(ulElm)   
     }
-    liCol = Number(String(dispData.StartYear).slice(-1))
-    if (isNaN(liCol)){
-        liCol = 0
+    // Row>1のセルは10行のLIの塊、Liの上からの位置を計算して、そこのイベントを追加
+    //Row 0 は　task毎に　Li　を作るので作った最後のLIのデータを追加
+    if (tdRow == 1){
+        //li を生成して、そのLiの番号をliRowにセット
+        let uls = cellElm.getElementsByClassName("tableul")
+        var lielm = document.createElement('li');
+        uls[0].appendChild(lielm);
+        let lis = uls[0].getElementsByTagName("li")
+        liRow = lis.length -1
+    }else {
+        
+        if(tdRow < 8){
+            //紀元前なので、1が一番で0が一番上
+            let tmpno = Number(String(dispData.StartYear).slice(-2)) * 99
+            liRow =  Number(String(tmpno).slice(-2,-1))
+            
+        }else {
+            liRow = Number(String(dispData.StartYear).slice(-1))
+        }
+        if (isNaN(liRow)){
+            liRow = 0
+        }
+
     }
     var ulElm = cellElm.getElementsByClassName('tableul');
     let textspan = document.createElement('span');
@@ -235,7 +276,7 @@ function createTDdata(tableElm,dispData,tdRow,tdCol,SelectCountry){
     }
 
     /* 同年に複数のイベントがあった場合はドロップダウンメニュー形式にする */
-    liElm = ulElm[0].children[liCol]
+    liElm = ulElm[0].children[liRow]
     if (liElm.innerHTML != ""){
         
       /*  createSubMenu(liElm,dispData,tdRow,tdCol)*/
@@ -246,11 +287,11 @@ function createTDdata(tableElm,dispData,tdRow,tdCol,SelectCountry){
     } else {
         if(tdCol < 3){
             textspan.innerHTML= dispData.TaskName
-            ulElm[0].children[liCol].appendChild(textspan)  
+            ulElm[0].children[liRow].appendChild(textspan)  
         }else{
             
             textspan.innerHTML =String(dispData.StartYear) + ":"+ dispData.TaskName
-            ulElm[0].children[liCol].appendChild(textspan) 
+            ulElm[0].children[liRow].appendChild(textspan) 
         }
     }
     
@@ -323,7 +364,7 @@ function createSubMenu(liElm,dispData,tdRow,tdCol){
         textspan.setAttribute("class","colortext")
         //欧米はテキストに色を付ける //
 
-        if (dispData.AreaName =="欧米"){
+        if (dispData.AreaName =="欧米" ||dispData.AreaName =="アジア" ){
             var spanColor = ColorCheck(dispData)
             textspan.setAttribute("style","color:"+ spanColor + " ;")      
         }
@@ -350,7 +391,7 @@ function ColorCheck(dispData){
                 return "gray"
     }else{
         if (check in DispCountryArray){
-            return DispCountryArray[check][1];
+            return DispCountryArray[check][2];
         } else {
             return "gray" ;
         }
@@ -376,6 +417,24 @@ function relCountryCheck(dispCountrys,RelCountry )  {
         if (RelCountry.includes(dispArray[i])== true ){
             
             return dispArray[i];
+        }
+    
+    }
+    return "NG";        
+}
+function checkCountry(selectCountrys,RelCountry)  {
+    //dispCountrys :チェックボックスで表示すると選択されて国名の配列　RelCountry: データの関連国
+    if (RelCountry == ""){
+        return "OK";
+    }
+    if (selectCountrys.length == 0){
+        return "OK";
+    }
+    for (let i = 0 ; i < selectCountrys.length ; i++){
+        //console.log("dispCountry check:"+ dispArray[i] + "rel:"+RelCountry+"="+RelCountry.includes(dispArray[i]))
+        if (RelCountry.includes(selectCountrys[i])== true ){
+            
+            return "OK"
         }
     
     }
@@ -431,46 +490,67 @@ function fontChange(size){
     
 }
 
-function createCheckBox(summaryText,dispText,cId,changeFunc,dispArray){
-    var checkCountry = document.getElementById("checktable")
-    var cc = 0
-    countrytable = document.createElement("table") 
-    checkbox = ""
-    for (let key in DispCountryArray) {  
-        checkbox = checkbox + "<td  align='left'><input type='checkbox' name='checkboxCountry' " 
-        checkbox = checkbox + "value='" +key+ "'>" 
-        checkbox = checkbox + '<font size= "2" color="' + DispCountryArray[key][1] + '">' + DispCountryArray[key][0] + '</font></td>' 
-        if (cc == 1){
-            checkbox += "</tr><tr>"
-            cc  = 0
-        } else{
-            cc += 1
+function createCheckBox(){
+    let checkID = ["checktable","checktableAsia"]
+    let syubetu = ["欧米","アジア"]
+
+    for(ii=0;ii<2;ii++){
+        var checkCountry = document.getElementById(checkID[ii])
+        var cc = 0
+        countrytable = document.createElement("table") 
+        checkbox = ""
+    //    const countryArray = DispCountryArray.filter((row,index) =>  row[index][0] === syubetu[ii] );
+    //console.log(countryArray)
+
+
+        for (let key in DispCountryArray) {
+            if (DispCountryArray[key][0]==syubetu[ii]){  
+                checkbox = checkbox + "<td  align='left'><input type='checkbox' name='" + checkID[ii] + "' " 
+                checkbox = checkbox + "value='" +key+ "'>" 
+                checkbox = checkbox + '<font size= "2" color="' + DispCountryArray[key][2] + '">' + DispCountryArray[key][1] + '</font></td>' 
+                if (cc == 1){
+                    checkbox += "</tr><tr>"
+                    cc  = 0
+                } else{
+                    cc += 1
+                }
+            }
         }
-    }
-    checkbox += "</tr></table></b>"
-    countrytable.innerHTML = checkbox
-    checkCountry.appendChild(countrytable)
-}
-function SelectCountry(){
-    
-    var checks = document.getElementsByName('checkboxCountry');
-    
-    let checkCountryArray = [];
-    
-    for ( i = 0; i <checks.length; i++) {
-        if ( checks[i].checked === true ) {
-            checkCountryArray.push(checks[i].value)                
-        }
+        checkbox += "</tr></table></b>"
+        countrytable.innerHTML = checkbox
+        checkCountry.appendChild(countrytable)
     }
 
+    
+}
+function SelectCountry(){
+    let checkID = ["checktable","checktableAsia"]
+    let syubetu = ["欧米","アジア"]
+    
+    let euroArray = [];
+    let asiaArray = [];
+
+    for(ii=0;ii<2;ii++){
+        var checks = document.getElementsByName(checkID[ii]);
+        
+        for ( i = 0; i <checks.length; i++) {
+            if ( checks[i].checked === true ) {
+                if(ii == 0){
+                    euroArray.push([checks[i].value])
+                } else {
+                    asiaArray.push([checks[i].value])
+                }               
+            }
+        }
+    }
     let table = document.getElementById("table") 
     let tablecell = document.getElementsByClassName("tablecell") 
     // 年以外のTDをすべてクリアして、再度作り直す //
     for(cell of tablecell){
         cell.innerHTML =""
     }
-    createChronoTable(tasks,checkCountryArray)
-
+    createChronoTable(tasks,euroArray,asiaArray)
+    
 }
 function searchItem(){
 
