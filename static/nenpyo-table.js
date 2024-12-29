@@ -567,9 +567,15 @@ function searchItem(){
         }
 
     })
+
+    var relWin = document.getElementById('resultUl')
+    relWin.innerHTML = ""
     matchRow = []
     for (var i = 0;i < matchTask.length;i++){
         matchRow.push(CalcDispRow(matchTask[i].StartYear))
+        let subli = document.createElement('li');
+        subli.innerHTML = matchTask[i].StartYear +":" + matchTask[i].TaskName +"("+ matchTask[i].RelCountry +")"
+        relWin.appendChild(subli)
     }
     let distTd = table.rows[matchRow[0]].cells[0]
 
@@ -577,6 +583,11 @@ function searchItem(){
         top: distTd.offsetTop , 
         behavior: 'smooth' 
     });
+    // 
+    
+    var reldiv = document.getElementById('searchResult')
+    reldiv.setAttribute("style","visibility:visible")
+
 
 }
 function searchStringCheck(task,seachString)  {
@@ -602,6 +613,11 @@ function searchStringCheck(task,seachString)  {
         }
     }
     return "NG";        
+}
+function searchclose(){
+    var reldiv = document.getElementById('searchResult')
+    reldiv.setAttribute("style","visibility:hidden")
+
 }
 
 class Task {
