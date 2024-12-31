@@ -441,18 +441,46 @@ function checkCountry(selectCountrys,RelCountry)  {
     return "NG";        
 }
 function selectItems(ItemNO){
+    const colwidth = [20,20,15,15,15]
+    const hiddenwidth = ["5%","5%","5%","10%","10%"]
+    let tmpwidth=[]
     let checks = document.getElementsByName('checkDispCat');
     let tableElm =document.getElementById("hiddenCol")
+    let tableHD =document.getElementById("dynamicTH")
     let colNo = ItemNO + 3
-    if ( checks[ItemNO].checked === true ) {
-        //非表示
-        tableElm.children[colNo].setAttribute("style", "visibility:collapse")
-        //tableElm.rows[0].cells[colNo].setAttribute("style", "visibility:collapse")
-    } else {
-        //表示
-        tableElm.children[colNo].setAttribute("style", "visibility:visible")
-//        tableElm.rows[0].cells[colNo].setAttribute("style", "visibility:visible")
-    }
+
+    for(ii=0;ii<5;ii++){
+        colNo = ii+3        
+   
+        if ( checks[ii].checked === true ) {
+            //非表示
+            tableElm.children[colNo].setAttribute("style", "visibility:collapse");
+            tmpwidth[ii] = 0
+        } else {
+            //表示
+            tableElm.children[colNo].setAttribute("style", "visibility:visibule");
+        }
+    }  
+    let totalWidth = tmpwidth.reduce((sum, element) => sum + element, 0);
+    
+
+   for(ii=0;ii<8;ii++){
+        if (ii < 3){
+            tableHD.children[ii].setAttribute("width","5%"); 
+        }else {
+            if (tmpwidth[ii-3] == 0){
+                tableHD.children[ii].setAttribute("width",  hiddenwidth[ii-3]);
+            }else{
+                let calwidth = Math.floor(tmpwidth[ii-3] * (85/totalWidth))
+
+                tableHD.children[ii].setAttribute("width", String(calwidth)+"%px"); 
+            }
+     
+        }
+    
+
+    } 
+
     
 }
 function jumppage(){
