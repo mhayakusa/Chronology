@@ -290,4 +290,20 @@ clear: both;*/
   text-align: left;
   z-index: 20;
 }
+.jidaiul {
+  text-align: left;
+/*    list-style-type:circle */
+  list-style-type: none;
+  text-wrap: nowrap; 
+  text-overflow: ellipsis;
+  margin: 0;
+  z-index: var(--tableTDZindex);
+  position: relative;
+}
 
+.jidaiul:hover  .colortext{
+background-color: rgb(230, 246, 221);
+z-index: (--tableTDOverZindex);
+font-weight: bold;
+opacity: 7;
+}

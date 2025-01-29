@@ -50,6 +50,9 @@ DispCountryArray["朝鮮"] =["アジア","朝鮮","red"]
 var matchTask = []
 var matchRow = []
 
+var colorArray = ["mediumblue","darkgreen","crimson","darkcyan","darkorange","chocolate","limegreen","orangered","dimgray","magenta","darkgreen","deeppink","purple"]
+var colorArray2 = ["skyblue","green","tomato","cyan","gold","pink","lime"]
+
 function Initialize() {
 
     createCheckBox()
@@ -232,7 +235,7 @@ function createTDdata(tableElm,dispData,tdRow,tdCol,euroArray,asiaArray){
     if (tmpst=="" ){
         var ulElm =document.createElement('ul');
         ulElm.setAttribute("class","tableul")
-        
+
         if (tdRow > 1){
                 /* 最古のデータ以外が1セル10個に集約*/        
             for(let ii=0;ii<10;ii++){
@@ -246,7 +249,7 @@ function createTDdata(tableElm,dispData,tdRow,tdCol,euroArray,asiaArray){
     //Row 0 は　task毎に　Li　を作るので作った最後のLIのデータを追加
     if (tdRow == 1){
         //li を生成して、そのLiの番号をliRowにセット
-        let uls = cellElm.getElementsByClassName("tableul")
+        var uls = cellElm.getElementsByClassName("tableul")
         var lielm = document.createElement('li');
         uls[0].appendChild(lielm);
         let lis = uls[0].getElementsByTagName("li")
@@ -266,7 +269,7 @@ function createTDdata(tableElm,dispData,tdRow,tdCol,euroArray,asiaArray){
         }
 
     }
-    var ulElm = cellElm.getElementsByClassName('tableul');
+    var ulElm = cellElm.getElementsByClassName("tableul")
     let textspan = document.createElement('span');
     textspan.setAttribute("class","colortext")
    
@@ -287,7 +290,11 @@ function createTDdata(tableElm,dispData,tdRow,tdCol,euroArray,asiaArray){
     } else {
         if(tdCol < 3){
             textspan.innerHTML= dispData.TaskName
-            ulElm[0].children[liRow].appendChild(textspan)  
+
+            ulElm[0].children[liRow].appendChild(textspan) 
+            ulElm[0].children[liRow].setAttribute("style","list-style:none;background-color: lightgreen;")
+            
+
         }else{
             
             textspan.innerHTML =String(dispData.StartYear) + ":"+ dispData.TaskName
