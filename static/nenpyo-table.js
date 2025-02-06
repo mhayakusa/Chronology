@@ -8,7 +8,6 @@ var DispCountryArray= new Array();
 DispCountryArray["ローマ"]=["欧米","ローマ","midnightblue"]
 DispCountryArray["ギリシア"]=["欧米","ギリシア","darkolivegreen"]
 DispCountryArray["神聖ローマ"]=["欧米","神聖ローマ","darkred"]
-DispCountryArray["オスマン帝国"]=["欧米","オスマン帝国","orange"]
 DispCountryArray["ゲルマニア"]=["欧米","ゲルマニア","darkred"]
 DispCountryArray["フランク王国"]=["欧米","フランク王国","brown"]
 DispCountryArray["ビザンツ帝国"]=["欧米","ビザンツ帝国","darkolivegreen"]
@@ -19,7 +18,6 @@ DispCountryArray["墺"]=["欧米","オーストリア","goldenrod"]
 DispCountryArray["蘭"]=["欧米","オランダ","magenta"]
 DispCountryArray["西"]=["欧米","スペイン","crimson"]
 DispCountryArray["独"]=["欧米","ドイツ","darkred"]
-DispCountryArray["土"]=["欧米","トルコ","orange"]
 DispCountryArray["白"]=["欧米","ベルギー","mediumorchid"]
 DispCountryArray["波"]=["欧米","ポーランド","orangered"]
 DispCountryArray["葡"]=["欧米","ポルトガル","darkcyan"]
@@ -29,19 +27,22 @@ DispCountryArray["米"]=["欧米","アメリカ","maroon"]
 DispCountryArray["瑞"]=["欧米","スイス","limegreen"]
 DispCountryArray["洪"]=["欧米","ハンガリー","mediumturquoise"]
 DispCountryArray["勃"]=["欧米","ブルガリア","lightseagreen"]
-DispCountryArray["中東"]=["欧米","中東","burlywood"]
+DispCountryArray["エジプト"]=["欧米","エジプト","burlywood"]
 DispCountryArray["アフリカ"]=["欧米","アフリカ","tan"]
 DispCountryArray["南米"]=["欧米","南米","purple"]
+//DispCountryArray["共通"]=["欧米","共通/不明","gray"]
 
 DispCountryArray["中国"] =["アジア","中国","blue"]
 DispCountryArray["モンゴル"] =["アジア","モンゴル","red"]
 DispCountryArray["印"] =["アジア","インド","lightseagreen" ]
-DispCountryArray["中東"] =["アジア","中東","pink"]  
+DispCountryArray["オスマン帝国"]=["アジア","オスマン帝国","orange"]
+DispCountryArray["土"]=["アジア","トルコ","orange"]
+DispCountryArray["中東"] =["アジア","中東","darkorange"]  
 DispCountryArray["韓国"] =["アジア","韓国","green"]
-DispCountryArray["ベトナム"] =["アジア","ベトナム","cyan"]
+DispCountryArray["ベトナム"] =["アジア","ベトナム","darkcyan"]
 DispCountryArray["インドネシア"] =["アジア","インドネシア","tomato"]
 DispCountryArray["タイ"] =["アジア","タイ","royalblue"]
-DispCountryArray["フィリピン"] =["アジア","フィリピン","aquamarine"]
+DispCountryArray["フィリピン"] =["アジア","フィリピン","mediumturquoise"]
 DispCountryArray["ミャンマー"] =["アジア","ミャンマー","mediumturquoise"]
 DispCountryArray["カンボジア"] =["アジア","カンボジア","gold"]
 DispCountryArray["シンガポール"] =["アジア","シンガポール","darkorange"]
@@ -205,6 +206,14 @@ function CalcDispRow(year){
 
 }
 function createTDdata(tableElm,dispData,tdRow,tdCol,euroArray,asiaArray){
+    //    if(tdCol ==4 || tdCol ==5){
+    //    if(Number(dispData.StartYear) < -900){
+     //       console.log("tdCol"+tdCol+":"+dispData.StartYear+":"+ dispData.TaskName+":"+dispData.AreaName+":"+dispData.RelCountry)
+     //       console.log(euroArray)
+     //       console.log(asiaArray)   
+     //   } 
+ //    }
+
     /* 表示対象かチェックする */
     let check = ""
     if (tdCol ==4 ){
@@ -219,13 +228,7 @@ function createTDdata(tableElm,dispData,tdRow,tdCol,euroArray,asiaArray){
 
         return
     }
- //   if(tdCol ==4 || tdCol ==5){
- //       if(Number(dispData.StartYear) > 1500 &&  Number(dispData.StartYear) < 1800){
-  //          console.log(dispData.StartYear+":"+ dispData.TaskName+":"+dispData.AreaName+":"+dispData.RelCountry)
-  //          console.log(euroArray)
-  //          console.log(asiaArray)   
-  //      } 
- //   }
+
 
     cellElm = tableElm.rows[tdRow].cells[tdCol]
     cellElm.setAttribute("class","tablecell")
@@ -273,7 +276,7 @@ function createTDdata(tableElm,dispData,tdRow,tdCol,euroArray,asiaArray){
     let textspan = document.createElement('span');
     textspan.setAttribute("class","colortext")
    
-    if (dispData.AreaName =="欧米"){
+    if (dispData.AreaName =="欧米" ||dispData.AreaName =="アジア"){
         var spanColor = ColorCheck(dispData)
         textspan.setAttribute("style","color:"+ spanColor + " ;")      
     }
@@ -337,7 +340,7 @@ function createDetail(liElm,dispData,tdRow,tdCol){
     textspan.setAttribute("class","colortext")
     //欧米はテキストに色を付ける //
 
-    if (dispData.AreaName =="欧米"){
+    if (dispData.AreaName =="欧米" ||dispData.AreaName =="アジア"){
         var spanColor = ColorCheck(dispData)
         textspan.setAttribute("style","color:"+ spanColor + " ;")      
     }
@@ -369,6 +372,7 @@ function createSubMenu(liElm,dispData,tdRow,tdCol){
         subli.setAttribute("style","overflow: visible;text-wrap: inherit")
         let textspan = document.createElement('span');
         textspan.setAttribute("class","colortext")
+
         //欧米はテキストに色を付ける //
 
         if (dispData.AreaName =="欧米" ||dispData.AreaName =="アジア" ){
@@ -395,12 +399,12 @@ function ColorCheck(dispData){
     if (check =="ALL"){
         return "black";
     }else if (check =="NON"){
-                return "gray"
+                return "ashgray"
     }else{
         if (check in DispCountryArray){
             return DispCountryArray[check][2];
         } else {
-            return "gray" ;
+            return "darkgray" ;
         }
     }
 
@@ -430,15 +434,18 @@ function relCountryCheck(dispCountrys,RelCountry )  {
     return "NG";        
 }
 function checkCountry(selectCountrys,RelCountry)  {
-    //dispCountrys :チェックボックスで表示すると選択されて国名の配列　RelCountry: データの関連国
+    //dispCountrys :チェックボックスで表示すると選択された国名の配列　RelCountry: データの関連国
     if (RelCountry == ""){
         return "OK";
     }
+    //console.log("checkCountry:"+ selectCountrys + "rel:"+RelCountry)
     if (selectCountrys.length == 0){
         return "OK";
     }
     for (let i = 0 ; i < selectCountrys.length ; i++){
-        //console.log("dispCountry check:"+ dispArray[i] + "rel:"+RelCountry+"="+RelCountry.includes(dispArray[i]))
+        if (RelCountry == "" && selectCountrys[i] =="共通"){
+            return "OK";
+        }
         if (RelCountry.includes(selectCountrys[i])== true ){
             
             return "OK"

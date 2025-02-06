@@ -157,10 +157,16 @@ table.st-tbl1 td {
   
 }
 .tablecell:hover  .tableul{
- /* background-color: rgb(151, 68, 26);*/
+  /* background-color: rgb(151, 68, 26);*/
   z-index: var(--tableTDOverZindex);
   font-weight: bold;
   opacity: 1;
+}
+.tablecell:hover  span{
+  background-color: rgb(230, 246, 221);
+  z-index: (--tableTDOverZindex);
+  font-weight: bold;
+  opacity: 7;
 }
 
 .pmenu {
@@ -220,18 +226,17 @@ table.st-tbl1 td {
   visibility: visible;
 
 }
-.pmenu:active .submenu {
-	/*	background-color: var(--back-color);   */
+/*.pmenu:active .submenu {
+		background-color: red;
 	  transition: all 0.3s;
 	  visibility: hidden;
 	
 }
 .pmenu a:checked .submenu{
-  /*	background-color: var(--back-color);   */
+  	background-color: pink;
     transition: all 0.3s;
     visibility: hidden;
-  
-}
+}*/
 
 .tableul {
   text-align: left;
@@ -245,12 +250,8 @@ table.st-tbl1 td {
   position: relative;
 }
 
-.tableul:hover  .colortext{
-background-color: rgb(230, 246, 221);
-z-index: (--tableTDOverZindex);
-font-weight: bold;
-opacity: 7;
-}
+
+
 .tablepmenu {
 cursor: pointer;
 list-style: '';
