@@ -1,97 +1,43 @@
 <html lang="ja">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<script src="{{ url_for('static', filename='nenpyo-table.js') }}"></script>
-<title>世界年表２</title>
+<!--<script src="{{ url_for('static', filename='nenpyo-table.js') }}"></script>-->
+<title>テーブルテスト</title>
 <!--==============レイアウトを制御する独自のCSSを読み込み===============-->
 <style>
-  @media screen and (max-width: 768px) {
-    .wrapper {
-        display: grid;
-        grid-gap: 10px;
-      }
-    }
-
-  @media screen and (max-width: 480px) {
-    .dcanvas {
-        background: #eeeeee; display: inline; margin: auto ;
-        padding: auto; max-width: 100% ;height: auto;
-        width:300px;
-    } 
-/*          .table1{
-      margin: auto; 
-      grid-column-start: 1;
-      grid-row-start: 2;
-      
-    }
-    .table2{
-      margin: auto; 
-      grid-column-start: 1;
-      grid-row-start: 4;
-      
-    }　*/
-  }
-
-main {
-  background-color: #f1bed2; /*青色*/
+body{
   text-align: center;
-}          
-.dcanvas {
-   background: #eeeeee; display: inline; margin: auto ;
-   padding: auto; max-width: 100% ;height: auto;
-  } 
-.bcanvas {
-   background: #fdfccbfd; 
-   float: left;
-   margin:0 auto ;
-   padding: auto;
-/*   width: 380; */
-/*   max-width: 100% ;*/
-   height: auto;
-} 
-.page1 {
-    display: flow-root;
-    margin:0 auto; 
-    align-items: center;
-    place-items: center;
+  overflow: hidden;
 }
-button { width: 80px;height: 40px;background: #3ee7; color: black; 
-          padding:5px 0 5px;
-          border-radius: 5px;
-          display: inline; font-size:16px; font-weight: bold; 
-          align-items: center ;
-       }
-.body{
-          text-align: center;
-     }
-     table {
-    text-align: center;
-    font-size:10px;
-    /*font-weight: bold;*/ 
+H3{
+  margin: 5px;
 }
-   
-table.st-tbl1 {
-text-align: left;
-position: relative;
-font-size:10px; 
-table-layout:fixed; 
-width:100%
-
+.NavigationMenu{
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  top:0px;
+/*  justify-content:space-between;*/
+  height: 50px;
+  padding: 0;
+  margin: 5px;
 }
-table.st-tbl1 th,
-table.st-tbl1 TH{
-padding: 0.2rem;
-border: solid 1px #ddd;
-text-align: center;
-font-size:12px;
-resize: horizontal;
-overflow: hidden; 
+.st-tbl1 {
+  overflow: scroll;
+  text-align: left;
+  position: relative;
+  font-size:10px; 
+  table-layout:fixed;
+  width:100%;
+  height: 500px;
+  border-spacing: 0;
 }
 table.st-tbl1 th {
 background: rgb(192, 228, 248);
 z-index: 10;
 position: sticky;
-top: 70px;
+left: 0;
+top: 0;
 }
 table.st-tbl1 td {
   font-size:10px;
@@ -100,229 +46,39 @@ table.st-tbl1 td {
   padding: 0;
   vertical-align: top;
   height: 100px;
-  text-overflow: ellipsis; 
-  overflow: hidden; /*ここが一番効いた*/
+  text-wrap: nowrap;
 }
-.pmenu {
-  position: relative;
-  flex: 1;
-  cursor: pointer;
-  font-size:14px;
-  font-weight: bold;
-/*  width: 200px; 
-  padding-left: 10px;
-  padding-right: 10px;*/
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
-  text-align: center;
-  align-items: center;
-}
-.pmenu li{
-	border-bottom: 1px solid rgb(241, 41, 15);
-}
-.submenu {
-  list-style: none;
-  position: absolute;
-  display: block;
-  z-index: 20;
-  width: 180px;
-  top: 20px;
-  clear: both;
-  align-items: center;
-  text-align: center;
-  padding: 10px 0 10px 0;
-  background-color: var(--back-color);
-/*   margin-top: 25px;
-  
-
- transition: 0.3192s cubic-bezier(0.04, 0.04, 0.12, 0.96) 0.1008s;
-  transform: scale(1, 0);
-  transform-origin: top;*/
-  visibility: hidden;
-}
-.submenu ul{
-  text-align: left;
-}
-.submenu li{
-/*  display: flex;
-  justify-content: center;*/
-  width:100%;
-  padding: 5px 0 5px 0;
-  align-items: left;
-}
-
-.pmenu:hover {
-  background-color: var(--back-color); 
-}
-.pmenu:hover .submenu {
-/*	background-color: var(--back-color);   */
-  transition: all 0.3s;
-  visibility: visible;
-
-}
-.pmenu:active .submenu {
-	/*	background-color: var(--back-color);   */
-	  transition: all 0.3s;
-	  visibility: hidden;
-	
-}
-.tableul {
-    text-align: left;
-/*    list-style-type:circle */
-    list-style-type: '';
-    text-wrap: nowrap; 
-    text-overflow: ellipsis;
-    margin: 0;
-    padding-left: 1em;
-    position: relative;
-
-}
-.tableul td{
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-  pointer-events: none;
-  /*white-space: nowrap;
-  text-overflow: ellipsis;*/
-}
-/*.tableul td:hover{
-  background-color: rgb(230, 218, 251);
-  overflow: visible;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.tableul:hover td{
-  background-color: rgb(135, 207, 164);
-  overflow: visible;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}*/
-.tableul:hover{
-  background-color: rgb(243, 209, 190);
-  overflow:visible;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width:160%;
-}
-.tableul:hover  .irotext{
-  background-color: rgb(237, 233, 231);
-  z-index: 200;
-  font-weight: bold;
-  opacity: 1;
-}
-/*.irotext{
-  background-color: white;
-}*/
-.tablepmenu {
-  cursor: pointer;
-  list-style: '▼';
-  position: relative;
-  text-align: left;
-  align-items: left;
-  padding: auto;
-  pointer-events: auto;
-/*  list-style: none;*/
-}
-.teblesubitem {
-  list-style: none;
-  z-index: 10;
-  position: absolute;
-/*  display: inline-block;
-clear: both;*/
-  display: block;
-  align-items: left;
-  text-align: left;
-  width: 150%;
-  background-color: rgb(200, 243, 245);
-  visibility: hidden;
-  overflow:visible;
-  padding:0;
-  margin:0px;
-}
-.teblesubitem li{
-    text-align: left;
-   /* overflow: hidden;*/
-   /* white-space: nowrap;*/
-    text-overflow: ellipsis;
-}
-
-.tablepmenu:hover {
-  background-color: rgb(211, 243, 187); 
-  
-}
-.tablepmenu:hover .teblesubitem {
-/*	background-color: var(--back-color);   */
-  transition: all 0.3s;
-  visibility: visible;
-
-}
-
 </style>
+<body onload="Initialize()">
 <header class="NavigationMenu">
-    <h2>世界年表</h2>
-    <div id = "main"></div>
-    <nav>
-    </nav>
+    <h3>テーブルテスト</h3>
+    <div id = "main" style="display: flex;  flex-direction: row;padding: 0;margin: 5px;">
+      <div>メニュー 1</div>
+      <div>メニュー 2</div>
+    </div>
  </header>
- </head>
- <body class="body" onload="Initialize()">
-  <details class="detail1">
-    <summary>
-      設定
-    </summary>
-    <header class="NavigationMenu">
-    <div class="bord_div" >
-          <lael>隠す</lael>
-          <input type='checkbox' name='checkDispCat' value=3 onchange='selectItems(0)'>日本
-          <input type='checkbox' name='checkDispCat' value=4 onchange='selectItems(1)'>欧米
-          <input type='checkbox' name='checkDispCat' value=5 onchange='selectItems(2)'>アジア
-          <input type='checkbox' name='checkDispCat' value=6 onchange='selectItems(3)'>科学・芸術（日本）
-          <input type='checkbox' name='checkDispCat' value=7 onchange='selectItems(4)'>科学・芸術（欧米）
-          <div align="center"> 開始年 <input  type="input" id="inputFrom"  value="1600" required; style="width:4em"></div>
-          <div align="center" >
-            <button class="button" type="submit" style="background: rgb(189, 240, 179);" id="kikan" onclick="ChangePeriod()">表示更新</button>
-        </div>
-        <P></P>
-    </div>
-    <div>        
-     <details id=pattern1> 
-     </details>
-    </div>
-    </div> 
-    <div align="left"><input  type="input" id="seachString"  value="" required; style="width:10em">
-        <button class="button" type="submit" style="background: rgb(179, 226, 240);" id="searchBtn" onclick="searchItem()">検索</button>
-    </div></header>
- </details>
-  <table id="table" class="st-tbl1" style="clear: both;margin:auto;font-size:14px; font-weight: bold; ">
-    <tr>
-      <TH>年 </TH>
-      <TH>時代</TH>
-      <TH>将軍</TH>
-      <TH style="visibility: inherit;">日本</TH>
-      <TH id="dynamicTH">
-        <ul style="list-style: none;" >
-          <li class="pmenu" ontouchstart="">欧米
-             <ul class="submenu">
-                  <select id="shisetuCheck" style="font-weight: bold;width: 100%" onchange="disp_hidden(2)">
-                  <option value="0">表示・非表示</option>
-                  <option value="1">ローマ</option>
-                  <option value="2">ギリシア</option>
-                  <option value="3">神聖ローマ</option>
-                  <option value="4">オスマン帝国</option>
-                  <option value="5">ゲルマニア</option>
-                  <option value="6">フランク王国</option>
-                  <option value="7">ビザンツ帝国</option>
-                  <option value="8">仏</option>
-                  <option value="9">英</option>
-                  <option value="A">伊</option>
-                  </select>
-              </ul> 
-          </li>
-          </ul>    
-      </TH>
-      <TH>アジア</TH>
-      <TH>科学・芸術（日本）</TH>
-      <TH>科学・芸術（欧米）</TH>
+ <div id="dummy" style="height:50px"></div>
+ <div class="contents" style="overflow-y:scroll;height: calc(100% - 51px);background-color: beige;">
+  <table id="table" class="st-tbl1">
+    <colgroup id="hiddenCol">
+      <col></col>
+      <col></col>
+      <col></col>
+      <col></col>
+      <col></col>
+      <col></col>
+      <col></col>
+      <col></col>
+  </colgroup>
+    <tr id="dynamicTH" class="dynamicTH">
+      <TH width="5em" height="20px">年 </TH>
+      <TH width="5em" height="20px">時代</TH>
+      <TH width="5em" height="20px">将軍</TH>
+      <TH width="20%" height="20px">日本</TH>
+      <TH  width="20%" height="20px" >欧米</TH>
+      <TH width="15%" height="20px" >アジア</TH>
+      <TH width="15%" height="20px">科学・芸術（日本）</TH>
+      <TH width="15%" height="20px">科学・芸術（欧米）</TH>
     </tr>
     <tr><td>1240</td>
         <td></td>
@@ -520,7 +276,9 @@ clear: both;*/
         <td></td>
         <td></td>
     </tr>
-  
-</table>
-</body>
+  </table>
+
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+</div>
+
 </html>

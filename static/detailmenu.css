@@ -13,6 +13,7 @@ body {
     --back-color:#c3f9df;
       background: #fff;	/*背景色*/
     color: black;	    /*全体の文字色*/
+    text-align: center;
 }
 header {
 	position: fixed;
@@ -24,6 +25,7 @@ header {
 	z-index: var( --hederZindex);
   background-color:var(--back-color); /* ヘッダーの背景色を指定する */
   padding: 0 ; 
+  margin: 0;
  	font-size: 14px;
 	font-weight: bold;
   text-align: center;  
@@ -98,9 +100,7 @@ button { width: 40px;height: 30px;background: #3ee7; color: black;
           display: inline; font-size:12px; font-weight: bold; 
           align-items: center ;
        }
-.body{
-          text-align: center;
-     }
+
 table {
     text-align: center;
     font-size:10px;
@@ -108,30 +108,42 @@ table {
 }
    
 table.st-tbl1 {
-text-align: left;
-position: relative;
-table-layout:fixed; 
-width:100%;
-font-size:11px; 
-font-weight: bold;
-margin-top: var(--hedder-height);
-
+  text-align: left;
+  position: relative;
+  table-layout:fixed; 
+  width:100%;
+  font-size:11px; 
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  border-spacing: 0
+ /* margin-top: var(--hedder-height);*/
 }
-table.st-tbl1 th,
+/*table.st-tbl1 th,
 table.st-tbl1 TH{
-padding: 0.2rem;
-border: solid 1px #ddd;
-text-align: center;
-font-size:12px;
-resize: horizontal;
-overflow: hidden; 
-}
+  padding: 0.2rem;
+  border: solid 1px #ddd;
+  text-align: center;
+  font-size:12px;
+  resize: horizontal;
+  overflow: hidden; 
+}*/
 table.st-tbl1 th {
-background: rgb(192, 228, 248);
-z-index: var(--tableTHZindex);
-position: sticky;
-top: var(--hedder-height);
-border: 1px solid black;
+  background: rgb(192, 228, 248);
+  z-index: var(--tableTHZindex);
+  position: sticky;
+  top:0;
+/*  top: var(--hedder-height); */
+  font-size:12px;
+  padding: 0.2rem;
+  margin: 0;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  text-align: center;
+  resize: horizontal;
+  overflow: hidden;
 }
 table.st-tbl1 td {
   font-size:var(--tablefontsize);
@@ -142,11 +154,28 @@ table.st-tbl1 td {
   height: 100px;
   text-overflow: ellipsis; 
   overflow: hidden;
-  border: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 2px solid black;
+  
+}
+/*.st-tbl1 tr:first-child th{
+  border-left: 2px solid black;
+}*/
+.st-tbl1 th:first-child{
+  border-left: 2px solid black;
+}
+.st-tbl1 th:last-child{
+  border-right: 2px solid black;
+}
+.st-tbl1 td:first-child {
+  border-left: 2px solid black;
+}
+.st-tbl1 td:last-child{
+  border-right: 2px solid black;
 }
 .tablecell {
-
-  border: 1px solid black;
+  padding: 0; /* hoverのためのdummy */
 }
 .tablecell:hover{
  /* background-color: rgb(243, 209, 190);*/
