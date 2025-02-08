@@ -500,14 +500,15 @@ function selectItems(ItemNO){
 function jumppage(){
     var table = document.getElementById("table")    
     var inputRow = document.getElementById('inputFrom').value;
+    var tablediv = document.getElementById("tablediv")    
     let rowNo = 0;
     if(!isNaN(inputRow)){
        rowNo = Math.trunc(Number(inputRow) /10 + 4)
     }
     
-    let distTd = table.rows[rowNo].cells[0]
+    let distTd = table.rows[rowNo + 3].cells[0]
 
-    window.scrollTo({ 
+    tablediv.scrollTo({ 
         top: distTd.offsetTop , 
         behavior: 'smooth' 
     });
