@@ -596,6 +596,9 @@ function SelectCountry(){
     
 }
 function searchItem(){
+    
+    var reldiv = document.getElementById('searchResult')
+    reldiv.setAttribute("style","visibility:visible")
 
     var strings = document.getElementById('seachString').value
 
@@ -620,16 +623,22 @@ function searchItem(){
         subli.innerHTML = matchTask[i].StartYear +":" + matchTask[i].TaskName +"("+ matchTask[i].RelCountry +")"
         relWin.appendChild(subli)
     }
+
+    let reldevheight = window.innerHeight - 100;
+    let heightSt =  String(reldevheight)  + "px"
+
+    if (matchTask.length > 40){    
+        reldiv.style.height = heightSt
+    }
+
     let distTd = table.rows[matchRow[0]].cells[0]
 
-    window.scrollTo({ 
+    var tablediv = document.getElementById("tablediv")  
+    tablediv.scrollTo({ 
         top: distTd.offsetTop , 
         behavior: 'smooth' 
     });
     // 
-    
-    var reldiv = document.getElementById('searchResult')
-    reldiv.setAttribute("style","visibility:visible")
 
 
 }
