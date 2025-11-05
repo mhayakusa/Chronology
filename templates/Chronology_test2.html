@@ -60,7 +60,7 @@ table.st-tbl1 li {
 
 /* --パターン１*/ 
 .st-tbl1 {
-  background-color: rgb(236, 245, 197);
+  background-color: rgb(191, 218, 70);
   overflow: scroll;
   text-align: left;
   position: relative;
@@ -69,12 +69,13 @@ table.st-tbl1 li {
   width:100%;
   text-wrap: nowrap;
 /*  border: 1px solid black;*/
-  padding: 0;
- /* border-collapse: collapse;*/
+  
+/*  border-collapse: collapse;*/
 /*  outline: 1px solid #010618;
   outline-offset: -1px;*/
   border-spacing: 0;
   margin: 0;
+  padding: 0;
 
 }
 table.st-tbl1 th {
@@ -85,18 +86,22 @@ table.st-tbl1 th {
   top: 0;
   padding-top: 0;
   margin-top: 0;
-  border: 1px solid rgb(223, 82, 82);
+  border-top: 1px solid rgb(223, 82, 82);
+  border-left: 1px solid rgb(223, 82, 82);
+  border-bottom: 1px solid rgb(223, 82, 82);
   text-align: center;
   font-size:12px; 
- /* border-collapse: collapse;*/
-/*  outline: 1px solid #f32e2e;
+  /* border-collapse: collapse;
+  outline: 1px solid #f32e2e;
   outline-offset: -1px;*/
 }
 table.st-tbl1 td {
   overflow: hidden;
-  border: 1px solid rgb(223, 82, 82);
-/*  outline: 1px solid #2e5cf3;
-  outline-offset: 0px;*/
+  border-bottom: 1px solid rgb(223, 82, 82);
+  border-left: 1px solid rgb(223, 82, 82);
+/*  border: 1px solid rgb(223, 82, 82);
+  outline: 1px solid #2e5cf3;
+  outline-offset: -1px;*/
 }
 table.st-tbl1 ul {
   list-style: none;
@@ -105,10 +110,14 @@ table.st-tbl1 ul {
 table.st-tbl1 li {
   padding: 0;
 }
-/*
-.st-tbl1 tr:first-child th{
-    border-top: 1px solid #999;
+
+.st-tbl1 th:last-child  {
+    border-right: 1px solid rgb(223, 82, 82);
 }
+.st-tbl1 td:last-child  {
+    border-right: 1px solid rgb(223, 82, 82);
+}
+/*
 .st-tbl1 th:first-child{
     border-left: 1px solid #999;
 }
